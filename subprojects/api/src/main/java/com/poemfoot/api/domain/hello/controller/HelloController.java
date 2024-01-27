@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController {
 
     @Operation(summary = "Swagger 테스트")
-
     @GetMapping
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok("hello");
