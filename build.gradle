@@ -46,16 +46,10 @@ subprojects {
     }
 
     dependencies {
-//        implementation "com.google.guava:guava:${guavaVersion}"
-//        implementation "org.apache.commons:commons-lang3:${apacheCommonsLang3Version}"
-//        implementation "com.fasterxml.jackson.core:jackson-databind"
-//        implementation 'com.google.code.gson:gson'
-
         implementation 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//        testImplementation "com.github.javafaker:javafaker:${javaFakerVersion}"
     }
 
     tasks.named('test') {
