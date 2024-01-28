@@ -15,8 +15,20 @@
   - [ ] docker 설치
   - [ ] docker-compose 설치
   
-# 접속 가이드
-- [ ] ssh 접속 가이드 작성
+# ssh 접속 가이드
+- `poten16-server.pem` 파일을 다운로드
+  - **해당 파일은 오픈채팅방에 요청주시면 전달드리겠습니다.**
+- `~/.ssh/config` 파일에 아래 내용 추가
+  ```bash
+  cat <<EOF >> ~/.ssh/authorized_keys
+  Host poten16-server
+    IdentityFile ~/.ssh/poten16-server.pem
+    HostName 106.10.51.10
+    Port 2200
+    User root
+  EOF
+  ```
+- `ssh poten16-server` 명령어로 접속
 
 # Docker Image
 - [ ] docker image build 후, docker 실행으로 정상되는지 확인
