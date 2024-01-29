@@ -1,3 +1,9 @@
+# 개발환경
+| 분류 |  버전   |
+|:---:|:-----:|
+| Java |  21   |
+| Spring Boot | 3.2.2 |
+| Gradle |  8.4  |
 | MySQL |  8.2  |
 
 # 인프라
@@ -47,7 +53,13 @@ docker pull poten16.kr.ncr.ntruss.com/poten16-server:{version}
 
 # CI/CD 세팅
 - [ ] Github Actions
-  @@ -32,7 +64,14 @@
+  - [ ] 빌드
+    - gradle 명령어 실행 (build 및 테스트)
+    - docker image build
+  - [ ] 배포
+    - docker image push
+    - ssh 접속 후, 서버 호스트에서 docker image pull & restart
+
 # ECR 관련 세팅
 - NCP access key, private key
 ```bash
