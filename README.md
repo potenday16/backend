@@ -30,8 +30,10 @@
 ```bash
 mysql -h db-lbpvf.pub-cdb.ntruss.com -u poten16 -p
 ```
+
 # Docker Image
 - [x] docker image build 후, docker 실행으로 정상되는지 확인
+
 # Docker Build 및 run 가이드
 ```bash
 # in local
@@ -42,6 +44,7 @@ docker push poten16.kr.ncr.ntruss.com/poten16-server:{version}
 docker pull poten16.kr.ncr.ntruss.com/poten16-server:{version}
 ./scripts/run_docker.sh
 ```
+
 # CI/CD 세팅
 - [ ] Github Actions
   @@ -32,7 +64,14 @@
@@ -50,6 +53,7 @@ docker pull poten16.kr.ncr.ntruss.com/poten16-server:{version}
 ```bash
 docker login poten16.kr.ncr.ntruss.com
 ```
+
 # 환경변수
 |이름 | 설명|
 |-- | --|
