@@ -1,4 +1,4 @@
-FROM openjdk:21-slim-buster as Builder
+FROM openjdk:21-slim-buster AS Builder
 WORKDIR /usr/bin/app
 COPY build/libs/*.jar app.jar
 
@@ -17,7 +17,7 @@ COPY docker/run-java.sh /usr/bin/run-java.sh
 RUN apt-get update && apt-get install -y wget
 # RUN wget -O dd-java-agent.jar 'https://github.com/DataDog/dd-trace-java/releases/latest/download/dd-java-agent.jar'
 
-ENV JAVA_MAIN_CLASS org.springframework.boot.loader.JarLauncher
+ENV JAVA_MAIN_CLASS org.springframework.boot.loader.launch.JarLauncher
 ENV JAVA_APP_DIR /usr/bin/app
 ENV JAVA_LIB_DIR /usr/bin/app
 ENV JAVA_OPTIONS "-ea -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+ExitOnOutOfMemoryError"
