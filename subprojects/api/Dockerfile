@@ -6,7 +6,14 @@ RUN ["java", "-Djarmode=layertools", "-jar", "app.jar", "extract"]
 
 FROM openjdk:21-slim-buster AS runner
 ARG WORK_DIR=/usr/bin/app
+ARG MYSQL_URL
+ARG MYSQL_USERNAME
+ARG MYSQL_PASSWORD
 WORKDIR ${WORK_DIR}
+
+ENV MYSQL_URL=${MYSQL_URL}
+ENV MYSQL_USERNAME=${MYSQL_USERNAME}
+ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
 
 COPY --from=builder ${WORK_DIR}/dependencies/ ./
 COPY --from=builder ${WORK_DIR}/spring-boot-loader/ ./
