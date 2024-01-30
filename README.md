@@ -41,14 +41,22 @@ mysql -h db-lbpvf.pub-cdb.ntruss.com -u poten16 -p
 - [x] docker image build 후, docker 실행으로 정상되는지 확인
 
 # Docker Build 및 run 가이드
+- Gradle의 bootJar 실행
+- Gradle의 bootBuildImage 실행
 ```bash
 # in local
-docker build --platform linux/amd64 -t poten16.kr.ncr.ntruss.com/poten16-server:0.0.1 .
 docker login poten16.kr.ncr.ntruss.com
 docker push poten16.kr.ncr.ntruss.com/poten16-server:{version}
 # in server
 docker pull poten16.kr.ncr.ntruss.com/poten16-server:{version}
 ./scripts/run_docker.sh
+```
+```bash
+# run_docker.sh
+#!/bin/bash
+
+# Docker 실행 (환경변수는 ~/.bash_profile 에 지정함)
+docker run -d --name poten16-server -p 8080:8080 -e MYSQL_URL=${MYSQL_URL} -e MYSQL_USERNAME=${MYSQL_USERNAME} -e MYSQL_PASSWORD=${MYSQL_PASSWORD} poten16.kr.ncr.ntruss.com/poten16-server sleep infinity
 ```
 
 # CI/CD 세팅
