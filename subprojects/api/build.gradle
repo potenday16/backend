@@ -17,3 +17,10 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.named("bootBuildImage") {
+    imageName = "poten16.kr.ncr.ntruss.com/poten16-server"
+    tags = ['latest', '0.0.1']
+    environment["platform"] = 'linux/amd64'
+}
+
