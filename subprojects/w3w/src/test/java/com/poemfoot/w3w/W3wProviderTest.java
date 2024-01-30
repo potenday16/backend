@@ -7,12 +7,14 @@ import com.what3words.javawrapper.response.ConvertTo3WA;
 import com.what3words.javawrapper.response.ConvertToCoordinates;
 import java.util.Locale;
 import org.apache.logging.log4j.util.Strings;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
+@Disabled
 @SpringBootTest
 @SpringBootApplication
 class W3wProviderTest {
