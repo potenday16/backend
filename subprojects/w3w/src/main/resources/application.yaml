@@ -1,0 +1,3 @@
+w3w:
+  api:
+    key: ${W3W_API_KEY}

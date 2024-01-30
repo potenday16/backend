@@ -1,0 +1,17 @@
+ext {
+    w3wJavaWrapperVersion = '3.1.19'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "com.what3words:w3w-java-wrapper:${w3wJavaWrapperVersion}"
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
