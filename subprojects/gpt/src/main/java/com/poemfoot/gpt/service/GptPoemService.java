@@ -11,6 +11,7 @@ import com.poemfoot.gpt.exception.badrequest.GptOverRequestException;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.service.OpenAiService;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,7 +32,9 @@ public class GptPoemService {
 
     @Transactional
     public GptChatPoemResponse completionChat(GptChatPoemRequest request) {
-        Optional<GptQuestion> question = questionRepository.findFirstByQuestion(getQuestion(request));
+        Optional<GptQuestion> question = questionRepository.findFirstByQuestion(
+                getQuestion(request.getWords(),
+                        request.getLocation()));
         if (question.isPresent()) {
             GptAnswer answer = question.get().getAnswer();
             return GptChatPoemResponse.of(
@@ -40,16 +43,26 @@ public class GptPoemService {
                     answer.getModel(),
                     answer.getAnswer());
         }
-
         validateGptRequest();
 
-        ChatCompletionResult chatCompletion = openAiService.createChatCompletion(GptChatPoemRequest.of(request));
+        ChatCompletionResult chatCompletion = openAiService.createChatCompletion(
+                GptChatPoemRequest.of(request));
         gptRequestCountUp();
-        GptChatPoemResponse response = GptChatPoemResponse.of(chatCompletion);
 
-        saveQuestion(request, response);
+        GptChatPoemResponse response = GptChatPoemResponse.of(chatCompletion);
+        GptAnswer answer = saveAnswer(getAnswer(response), response.getObject(),
+                response.getModel());
+        saveQuestion(getQuestion(request.getWords(), request.getLocation()), answer);
 
         return response;
+    }
+
+    public GptAnswer saveAnswer(String answer, String object, String model) {
+        return answerRepository.save(new GptAnswer(answer, object, model));
+    }
+
+    public GptQuestion saveQuestion(String question, GptAnswer answer) {
+        return questionRepository.save(new GptQuestion(question, answer));
     }
 
     private void validateGptRequest() {
@@ -58,23 +71,24 @@ public class GptPoemService {
         }
     }
 
-    private static void gptRequestCountUp() {
-        GptConfig.totalRequestCount++;
-        log.info("GptTotalRequestCount: {}",GptConfig.totalRequestCount);
-    }
-
-    private void saveQuestion(GptChatPoemRequest request, GptChatPoemResponse response) {
-        GptAnswer answer = saveAnswer(response);
-        String question = getQuestion(request);
-        questionRepository.save(new GptQuestion(question, answer));
-    }
-
-    private String getQuestion(GptChatPoemRequest request) {
-        return Stream.concat(request.getWords().stream(), Stream.of(request.getLocation()))
+    private String getQuestion(List<String> words, String location) {
+        return Stream.concat(words.stream(), Stream.of(location))
                 .collect(Collectors.joining(","));
     }
 
-    private GptAnswer saveAnswer(GptChatPoemResponse response) {
-        return answerRepository.save(new GptAnswer(response));
+    private String getAnswer(GptChatPoemResponse response) {
+        return responseToMessage(response).stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.joining());
+    }
+
+    private List<String> responseToMessage(GptChatPoemResponse response) {
+        return response.getMessages().stream()
+                .toList();
+    }
+
+    private static void gptRequestCountUp() {
+        GptConfig.totalRequestCount++;
+        log.info("GptTotalRequestCount: {}", GptConfig.totalRequestCount);
     }
 }

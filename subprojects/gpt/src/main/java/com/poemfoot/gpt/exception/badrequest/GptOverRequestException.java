@@ -1,8 +1,5 @@
 package com.poemfoot.gpt.exception.badrequest;
 
-import com.poemfoot.gpt.exception.GptException;
-import org.springframework.http.HttpStatus;
-
 public class GptOverRequestException extends BadRequestException {
 
     public GptOverRequestException() {

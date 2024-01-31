@@ -9,5 +9,4 @@ class GptApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

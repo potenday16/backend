@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GptAnswer extends BaseTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,21 +30,11 @@ public class GptAnswer extends BaseTime {
 
     private String model;
 
-    public GptAnswer(GptChatPoemResponse response) {
-        this.answer = getAnswer(response);
-        this.object = response.getObject();
-        this.model = response.getModel();
+    public GptAnswer(String answer, String object, String model) {
+        this.answer = answer;
+        this.object = object;
+        this.model = model;
     }
 
-    private String getAnswer(GptChatPoemResponse response) {
-        return responseToMessage(response).stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.joining());
-    }
 
-    @NotNull
-    private List<String> responseToMessage(GptChatPoemResponse response) {
-        return response.getMessages().stream()
-                .toList();
-    }
 }
