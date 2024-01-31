@@ -25,11 +25,14 @@ public class GptPoemController {
 
     @Operation(summary = "Gpt 시 생성")
     @PostMapping("/completion/chat")
-    public ResponseEntity<GptChatPoemResponse> completionChat(final @RequestBody GptChatPoemRequest request) {
+    public ResponseEntity<GptChatPoemResponse> completionChat(
+            final @RequestBody GptChatPoemRequest request) {
         GptChatPoemResponse response = gptQuestionService.requestPoem(request);
-        GptAnswer gptAnswer = gptAnswerService.saveAnswer(response);
-        gptQuestionService.saveQuestion(request, gptAnswer);
 
+        if (!response.isReuse()) {
+            GptAnswer gptAnswer = gptAnswerService.saveAnswer(response);
+            gptQuestionService.saveQuestion(request, gptAnswer);
+        }
         return ResponseEntity.ok(response);
     }
 }

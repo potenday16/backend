@@ -24,11 +24,14 @@ public class GptChatPoemResponse {
 
     private Usage usage;
 
-    public GptChatPoemResponse(String id, String object, String model, List<String> messages) {
+    private boolean reuse;
+
+    public GptChatPoemResponse(String id, String object, String model, List<String> messages, boolean reuse) {
         this.id = id;
         this.object = object;
         this.model = model;
         this.messages = messages;
+        this.reuse = reuse;
     }
 
     public static List<String> toResponseListBy(List<ChatCompletionChoice> choices) {
@@ -44,7 +47,8 @@ public class GptChatPoemResponse {
                 result.getCreated(),
                 result.getModel(),
                 toResponseListBy(result.getChoices()),
-                Usage.of(result.getUsage())
+                Usage.of(result.getUsage()),
+                false
         );
     }
 
@@ -53,7 +57,8 @@ public class GptChatPoemResponse {
                 id,
                 object,
                 model,
-                List.of(message)
+                List.of(message),
+                true
         );
     }
 }
