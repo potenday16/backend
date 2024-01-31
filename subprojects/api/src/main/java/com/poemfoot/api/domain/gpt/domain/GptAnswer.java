@@ -19,7 +19,7 @@ public class GptAnswer extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "gpt_answer", length = 500, nullable = false)
+    @Column(length = 500, nullable = false)
     private String answer;
 
     private String object;
