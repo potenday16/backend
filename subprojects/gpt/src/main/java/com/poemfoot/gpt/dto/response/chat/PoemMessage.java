@@ -1,4 +1,4 @@
-package com.poemfoot.gpt.dto.response;
+package com.poemfoot.gpt.dto.response.chat;
 
 import com.theokanning.openai.completion.chat.ChatMessage;
 import lombok.AllArgsConstructor;

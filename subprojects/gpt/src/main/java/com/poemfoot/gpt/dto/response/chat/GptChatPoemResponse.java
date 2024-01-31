@@ -1,4 +1,4 @@
-package com.poemfoot.gpt.dto.response;
+package com.poemfoot.gpt.dto.response.chat;
 
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
@@ -20,13 +20,20 @@ public class GptChatPoemResponse {
 
     private String model;
 
-    private List<PoemMessage> messages;
+    private List<String> messages;
 
     private Usage usage;
 
-    public static List<PoemMessage> toResponseListBy(List<ChatCompletionChoice> choices) {
+    public GptChatPoemResponse(String id, String object, String model, List<String> messages) {
+        this.id = id;
+        this.object = object;
+        this.model = model;
+        this.messages = messages;
+    }
+
+    public static List<String> toResponseListBy(List<ChatCompletionChoice> choices) {
         return choices.stream()
-                .map(completionChoice -> PoemMessage.of(completionChoice.getMessage()))
+                .map(completionChoice -> completionChoice.getMessage().getContent())
                 .toList();
     }
 
@@ -38,6 +45,15 @@ public class GptChatPoemResponse {
                 result.getModel(),
                 toResponseListBy(result.getChoices()),
                 Usage.of(result.getUsage())
+        );
+    }
+
+    public static GptChatPoemResponse of(String id, String object, String model, String message) {
+        return new GptChatPoemResponse(
+                id,
+                object,
+                model,
+                List.of(message)
         );
     }
 }

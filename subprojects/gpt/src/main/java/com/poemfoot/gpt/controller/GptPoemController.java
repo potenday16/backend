@@ -1,7 +1,7 @@
 package com.poemfoot.gpt.controller;
 
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
-import com.poemfoot.gpt.dto.response.GptChatPoemResponse;
+import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 import com.poemfoot.gpt.service.GptPoemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

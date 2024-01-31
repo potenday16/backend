@@ -1,4 +1,4 @@
-package com.poemfoot.gpt.dto.response;
+package com.poemfoot.gpt.dto.response.chat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
