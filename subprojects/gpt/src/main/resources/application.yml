@@ -14,7 +14,6 @@ spring:
           enabled: true
         format_sql: true
         default_batch_fetch_size: 100
-        show_sql: true
 
 gpt:
   model: gpt-4-0125-preview

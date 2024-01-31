@@ -75,8 +75,9 @@ docker login poten16.kr.ncr.ntruss.com
 ```
 
 # 환경변수
-|이름 | 설명|
-|-- | --|
-|MYSQL_URL | MYSQL 주소입니다 (JDBC 형태여야 합니다)|
-|MYSQL_USERNAME | MYSQL 사용자 명 입니다.|
-|MYSQL_PASSWORD | MYSQL 비밀번호 입니다.|
+|이름 | 설명                          |
+|-- |-----------------------------|
+|MYSQL_URL | MYSQL 주소입니다 (JDBC 형태여야 합니다) |
+|MYSQL_USERNAME | MYSQL 사용자 명 입니다.            |
+|MYSQL_PASSWORD | MYSQL 비밀번호 입니다.             |
+|GPT_TOKEN | GPT API-KEY 입니다.|
