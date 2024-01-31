@@ -1,4 +1,4 @@
-package com.peomfoot.gpt.dto.response;
+package com.poemfoot.gpt.dto.response;
 
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;

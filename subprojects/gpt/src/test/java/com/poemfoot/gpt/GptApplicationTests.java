@@ -1,4 +1,4 @@
-package com.peomfoot.gpt;
+package com.poemfoot.gpt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.peomfoot.gpt;
+package com.poemfoot.gpt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

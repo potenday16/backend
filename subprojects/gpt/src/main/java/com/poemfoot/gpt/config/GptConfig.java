@@ -1,4 +1,4 @@
-package com.peomfoot.gpt.config;
+package com.poemfoot.gpt.config;
 
 import com.theokanning.openai.service.OpenAiService;
 import java.time.Duration;
