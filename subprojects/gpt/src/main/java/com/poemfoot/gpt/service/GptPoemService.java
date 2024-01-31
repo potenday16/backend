@@ -12,6 +12,8 @@ import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.service.OpenAiService;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -68,12 +70,8 @@ public class GptPoemService {
     }
 
     private String getQuestion(GptChatPoemRequest request) {
-        List<String> words = request.getWords();
-
-        return new StringBuilder().append(String.join(", ", words))
-                .append(", ")
-                .append(request.getLocation())
-                .toString();
+        return Stream.concat(request.getWords().stream(), Stream.of(request.getLocation()))
+                .collect(Collectors.joining(","));
     }
 
     private GptAnswer saveAnswer(GptChatPoemResponse response) {
