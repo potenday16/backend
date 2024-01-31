@@ -1,4 +1,4 @@
-package com.poemfoot.gpt.dto.response.error;
+package com.poemfoot.api.global.dto.error;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

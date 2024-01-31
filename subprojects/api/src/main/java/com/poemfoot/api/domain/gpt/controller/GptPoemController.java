@@ -1,11 +1,14 @@
-package com.poemfoot.gpt.controller;
+package com.poemfoot.api.domain.gpt.controller;
 
+import com.poemfoot.api.domain.gpt.domain.GptAnswer;
+import com.poemfoot.api.domain.gpt.service.GptAnswerService;
+import com.poemfoot.api.domain.gpt.service.GptQuestionService;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
-import com.poemfoot.gpt.service.GptPoemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/gpt/v1")
 public class GptPoemController {
 
-    private final GptPoemService gptPoemService;
+    private final GptQuestionService gptQuestionService;
+    private final GptAnswerService gptAnswerService;
 
     @Operation(summary = "Gpt 시 생성")
     @PostMapping("/completion/chat")
-    public GptChatPoemResponse completionChat(final @RequestBody GptChatPoemRequest request) {
+    public ResponseEntity<GptChatPoemResponse> completionChat(final @RequestBody GptChatPoemRequest request) {
+        GptChatPoemResponse response = gptQuestionService.requestPoem(request);
+        GptAnswer gptAnswer = gptAnswerService.saveAnswer(response);
+        gptQuestionService.saveQuestion(request, gptAnswer);
 
-        return gptPoemService.completionChat(request);
+        return ResponseEntity.ok(response);
     }
 }

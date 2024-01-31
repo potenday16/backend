@@ -1,6 +1,6 @@
-package com.poemfoot.gpt.controller;
+package com.poemfoot.api.domain.gpt.controller;
 
-import com.poemfoot.gpt.dto.response.error.ErrorResponse;
+import com.poemfoot.api.global.dto.error.ErrorResponse;
 import com.poemfoot.gpt.exception.GptException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Objects;

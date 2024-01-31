@@ -1,4 +1,4 @@
-package com.poemfoot.gpt.config;
+package com.poemfoot.api.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

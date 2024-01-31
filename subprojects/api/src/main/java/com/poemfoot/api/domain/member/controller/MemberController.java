@@ -1,6 +1,6 @@
 package com.poemfoot.api.domain.member.controller;
 
-import com.poemfoot.api.domain.member.dao.MemberRepository;
+import com.poemfoot.api.domain.member.repository.MemberRepository;
 import com.poemfoot.api.domain.member.domain.Member;
 import jakarta.annotation.PostConstruct;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.poemfoot.gpt.config;
 
+import com.poemfoot.gpt.service.GptPoemProvider;
 import com.theokanning.openai.service.OpenAiService;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
@@ -22,4 +23,8 @@ public class GptConfig {
         return new OpenAiService(token, Duration.ofSeconds(60));
     }
 
+    @Bean
+    public GptPoemProvider gptPoemProvider(OpenAiService openAiService){
+        return new GptPoemProvider(openAiService);
+    }
 }

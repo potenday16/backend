@@ -1,7 +1,7 @@
-package com.poemfoot.gpt.domain.question;
+package com.poemfoot.api.domain.gpt.domain;
 
-import com.poemfoot.gpt.domain.BaseTime;
-import com.poemfoot.gpt.domain.answer.GptAnswer;
+import com.poemfoot.api.domain.gpt.domain.BaseTime;
+import com.poemfoot.api.domain.gpt.domain.GptAnswer;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
