@@ -1,15 +1,14 @@
-package com.poemfoot.api;
+package com.poemfoot.gpt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.poemfoot.api", "com.poemfoot.gpt"})
-public class ApiApplication {
+public class GptApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication.run(GptApplication.class, args);
     }
 
 }
