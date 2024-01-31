@@ -1,4 +1,4 @@
-package com.poemfoot.api.domain.gpt.domain;
+package com.poemfoot.api.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
