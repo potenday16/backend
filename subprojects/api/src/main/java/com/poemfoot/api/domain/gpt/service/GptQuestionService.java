@@ -5,6 +5,8 @@ import com.poemfoot.api.domain.gpt.domain.GptQuestion;
 import com.poemfoot.api.domain.gpt.repository.GptQuestionRepository;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
+import com.poemfoot.gpt.exception.badrequest.GptOverRequestException;
+import com.poemfoot.gpt.exception.toomanyrequest.GptTooManyRequestException;
 import com.poemfoot.gpt.service.GptPoemProvider;
 
 import java.util.Optional;
@@ -35,7 +37,8 @@ public class GptQuestionService {
                     answer.getModel(),
                     answer.getAnswer());
         }
-        return gptPoemProvider.completionChat(request);
+        return gptPoemProvider.completionChat(request)
+                .orElseThrow(GptTooManyRequestException::new);
     }
 
     @Transactional
