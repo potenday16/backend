@@ -14,7 +14,7 @@ public class GptChatPoemRequest {
 
     private static final String MODEL = "gpt-4-turbo-preview";
     private static final String ROLE = "user";
-    private static final Integer MAX_TOKENS = 1000;
+    private static final Integer MAX_TOKENS = 1;
 
     private List<String> words;
     private String location;

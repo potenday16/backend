@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GptConfig {
 
+    public static final Long MAX_TOTAL_REQUEST_COUNT = 1L;
+    public static Long totalRequestCount = 0L;
+
     @Value("${gpt.token}")
     private String token;
 
