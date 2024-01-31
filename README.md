@@ -81,3 +81,54 @@ docker login poten16.kr.ncr.ntruss.com
 |MYSQL_USERNAME | MYSQL 사용자 명 입니다.            |
 |MYSQL_PASSWORD | MYSQL 비밀번호 입니다.             |
 |GPT_TOKEN | GPT API-KEY 입니다.|
+
+# Domain 모델링
+- Member
+  - id
+  - deviceId : mobile device 고유값 (unique key) --> 
+  - mobileOs : (iOS/Android)
+- Card (Root Aggregate)
+  - id
+  - userId
+  - poemId
+  - backGroundImageId
+- Poem (= ChatGptResult)
+  - id
+  - chatGptRequestHash (4단어 해쉬 처리) : unique key
+  - content : VARCHAR(255)
+- BackGroundImage  (배경사진 개수 * (배경효과 개수 + 1))
+  - id
+  - (Optional) usable (Y/N)
+  - url (이미지 s3 url)
+  - 배경효과 (enum BackGroundEffect::name)
+
+- W3wResult
+  - id
+  - locale
+  - coordinates ( 위도, 경도 ) // TODO: 3 by 3 구역내의 인덱싱 필요...
+  - result (3단어 해쉬 처리)
+
+---
+# API 설계
+## HTTP Header
+> `-H POEM-DEVICE-ID: xxxxxxxxx`
+
+## API 목록
+- [ ] GET /api/v1/cards : 특정 요청자의 카드 목록
+- [ ] GET /api/v1/cards/{id} : 특정 카드 조회
+- [ ] POST /api/v1/cards : 카드 생성
+  - RequestBody
+    - userId
+    - coordinate (위도, 경도) --> w3w API 요청 파라미터로 사용
+    - additionalWord (추가 단어) - 위치 관련 단어
+    - backGroundImageId
+- ~~PUT /api/v1/cards/{id} : 카드 수정~~
+- ~~DELETE /api/v1/cards/{id} : 카드 삭제~~ (확인 필요)
+- [ ] GET /api/v1/cards/{id}/poem : 특정 카드의 시 조회
+- [ ] GET /api/v1/cards/{id}/background-image : 특정 카드의 배경사진 조회 (s3 URL) 
+
+- [ ] GET /api/v1/background-images : 배경사진 목록 조회 (usable = Y)
+- [ ] GET /api/v1/background-images/{id} : 배경사진 조회
+
+
+
