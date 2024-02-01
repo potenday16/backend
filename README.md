@@ -86,10 +86,11 @@ docker login poten16.kr.ncr.ntruss.com
 - Member
   - id
   - deviceId : mobile device 고유값 (unique key) --> 
-  - mobileOs : (iOS/Android)
+  - deviceOs : (iOS/Android)
+  - nickname
 - Card (Root Aggregate)
   - id
-  - userId
+  - memberId
   - poemId
   - backGroundImageId
 - Poem (= ChatGptResult)
@@ -114,7 +115,12 @@ docker login poten16.kr.ncr.ntruss.com
 > `-H POEM-DEVICE-ID: xxxxxxxxx`
 
 ## API 목록
-- [ ] GET /api/v1/cards : 특정 요청자의 카드 목록
+### Member
+- [x] GET /api/v1/members/check : 등록된 맴버인지 조회
+- [x] POST /api/v1/members : 맴버 저장
+
+### Card
+- [x] GET /api/v1/cards : 특정 요청자의 카드 목록
 - [ ] GET /api/v1/cards/{id} : 특정 카드 조회
 - [ ] POST /api/v1/cards : 카드 생성
   - RequestBody
@@ -127,6 +133,7 @@ docker login poten16.kr.ncr.ntruss.com
 - [ ] GET /api/v1/cards/{id}/poem : 특정 카드의 시 조회
 - [ ] GET /api/v1/cards/{id}/background-image : 특정 카드의 배경사진 조회 (s3 URL) 
 
+### Background Image
 - [ ] GET /api/v1/background-images : 배경사진 목록 조회 (usable = Y)
 - [ ] GET /api/v1/background-images/{id} : 배경사진 조회
 
