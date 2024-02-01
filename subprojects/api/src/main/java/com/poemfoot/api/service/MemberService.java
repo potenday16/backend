@@ -1,0 +1,39 @@
+package com.poemfoot.api.service;
+
+import com.poemfoot.api.domain.member.DeviceOsType;
+import com.poemfoot.api.domain.member.Member;
+import com.poemfoot.api.dto.request.MemberRequest;
+import com.poemfoot.api.dto.response.MemberResponse;
+import com.poemfoot.api.exception.badrequest.InvalidMemberException;
+import com.poemfoot.api.repository.MemberRepository;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class MemberService {
+
+    private final MemberRepository memberRepository;
+
+    @Transactional
+    public MemberResponse saveMember(String deviceId, MemberRequest memberRequest) {
+        checkSavedMember(deviceId);
+
+        DeviceOsType deviceOsType = DeviceOsType.from(memberRequest.deviceOsType());
+        Member member = new Member(deviceId, deviceOsType, memberRequest.nickname());
+
+        memberRepository.save(member);
+
+        return MemberResponse.of(member.getId(), member.getNickname());
+    }
+
+    private void checkSavedMember(String deviceId) {
+        Optional<Member> findMember = memberRepository.findFirstByDeviceId(deviceId);
+        if (findMember.isPresent()) {
+            throw new InvalidMemberException();
+        }
+    }
+}

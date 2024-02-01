@@ -1,11 +1,20 @@
 package com.poemfoot.api.controller;
 
+import static com.poemfoot.api.config.CommonConfig.DEVICE_ID;
+
+import com.poemfoot.api.dto.request.MemberRequest;
+import com.poemfoot.api.dto.response.MemberResponse;
 import com.poemfoot.api.repository.MemberRepository;
-import com.poemfoot.api.domain.Member;
+import com.poemfoot.api.domain.member.Member;
+import com.poemfoot.api.service.MemberService;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,17 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
-    @GetMapping
-    public List<Member> findAll() {
-        return memberRepository.findAll();
-    }
+    @PostMapping
+    public ResponseEntity<MemberResponse> saveMember(
+            @RequestHeader(DEVICE_ID) String deviceId,
+            @RequestBody MemberRequest memberRequest) {
 
-    @PostConstruct
-    public void init() {
-        memberRepository.save(new Member("poemfoot1"));
-        memberRepository.save(new Member("poemfoot2"));
-        memberRepository.save(new Member("poemfoot3"));
+        MemberResponse response = memberService.saveMember(deviceId, memberRequest);
+        return ResponseEntity.ok(response);
     }
 }

@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "GPT", description = "GPT 시 생성 관련 API")
+@Tag(name = "Poem", description = "시 관련 API")
 @RequestMapping("/api/v1/gpt")
-public class GptPoemController {
+public class PoemController {
 
     private final GptQuestionService gptQuestionService;
     private final GptAnswerService gptAnswerService;
