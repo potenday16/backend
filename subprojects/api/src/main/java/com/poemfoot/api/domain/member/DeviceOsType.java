@@ -1,6 +1,6 @@
 package com.poemfoot.api.domain.member;
 
-import com.poemfoot.api.exception.badrequest.InvalidDeviceOsException;
+import com.poemfoot.api.exception.badrequest.member.InvalidDeviceOsException;
 import java.util.Arrays;
 import java.util.Objects;
 

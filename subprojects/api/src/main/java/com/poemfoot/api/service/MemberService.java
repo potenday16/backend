@@ -5,7 +5,7 @@ import com.poemfoot.api.domain.member.Member;
 import com.poemfoot.api.dto.request.MemberRequest;
 import com.poemfoot.api.dto.response.member.MemberCheckResponse;
 import com.poemfoot.api.dto.response.member.MemberResponse;
-import com.poemfoot.api.exception.badrequest.InvalidMemberException;
+import com.poemfoot.api.exception.badrequest.member.InvalidMemberException;
 import com.poemfoot.api.repository.MemberRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

@@ -95,7 +95,7 @@ docker login poten16.kr.ncr.ntruss.com
   - backGroundImageId
 - Poem (= ChatGptResult)
   - id
-  - chatGptRequestHash (4단어 해쉬 처리) : unique key
+  - gptRequestHash (4단어 해쉬 처리) : unique key
   - content : VARCHAR(255)
 - BackGroundImage  (배경사진 개수 * (배경효과 개수 + 1))
   - id
@@ -121,7 +121,7 @@ docker login poten16.kr.ncr.ntruss.com
 
 ### Card
 - [x] GET /api/v1/cards : 특정 요청자의 카드 목록
-- [ ] GET /api/v1/cards/{id} : 특정 카드 조회
+- [x] GET /api/v1/cards/{id} : 특정 카드 조회
 - [ ] POST /api/v1/cards : 카드 생성
   - RequestBody
     - userId

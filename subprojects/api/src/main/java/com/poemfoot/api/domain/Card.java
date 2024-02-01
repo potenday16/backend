@@ -37,7 +37,17 @@ public class Card extends BaseTime{
 
     public Card(Member member, Poem poem, BackGroundImage backGroundImage) {
         this.member = member;
-        this.poem = poem;
+        setPoem(poem);
+        setBackGroundImage(backGroundImage);
+    }
+
+    private void setBackGroundImage(BackGroundImage backGroundImage) {
         this.backGroundImage = backGroundImage;
+        backGroundImage.getCards().add(this);
+    }
+
+    private void setPoem(Poem poem) {
+        this.poem = poem;
+        poem.getCards().add(this);
     }
 }

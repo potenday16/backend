@@ -1,5 +1,6 @@
-package com.poemfoot.api.exception.badrequest;
+package com.poemfoot.api.exception.badrequest.member;
 
+import com.poemfoot.api.exception.badrequest.BadRequestException;
 import lombok.Getter;
 
 @Getter
