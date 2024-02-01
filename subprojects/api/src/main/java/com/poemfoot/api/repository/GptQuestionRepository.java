@@ -1,6 +1,6 @@
-package com.poemfoot.api.domain.gpt.repository;
+package com.poemfoot.api.repository;
 
-import com.poemfoot.api.domain.gpt.domain.GptQuestion;
+import com.poemfoot.api.domain.GptQuestion;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

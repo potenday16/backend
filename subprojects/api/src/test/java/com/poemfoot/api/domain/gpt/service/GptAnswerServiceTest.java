@@ -2,7 +2,8 @@ package com.poemfoot.api.domain.gpt.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.poemfoot.api.domain.gpt.domain.GptAnswer;
+import com.poemfoot.api.domain.GptAnswer;
+import com.poemfoot.api.service.GptAnswerService;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

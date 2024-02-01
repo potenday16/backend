@@ -1,6 +1,5 @@
-package com.poemfoot.api.domain.gpt.domain;
+package com.poemfoot.api.domain;
 
-import com.poemfoot.api.domain.BaseTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

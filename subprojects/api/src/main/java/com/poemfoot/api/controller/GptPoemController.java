@@ -1,8 +1,8 @@
-package com.poemfoot.api.domain.gpt.controller;
+package com.poemfoot.api.controller;
 
-import com.poemfoot.api.domain.gpt.domain.GptAnswer;
-import com.poemfoot.api.domain.gpt.service.GptAnswerService;
-import com.poemfoot.api.domain.gpt.service.GptQuestionService;
+import com.poemfoot.api.domain.GptAnswer;
+import com.poemfoot.api.service.GptAnswerService;
+import com.poemfoot.api.service.GptQuestionService;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 import io.swagger.v3.oas.annotations.Operation;

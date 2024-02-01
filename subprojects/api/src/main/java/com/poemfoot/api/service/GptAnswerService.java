@@ -1,7 +1,7 @@
-package com.poemfoot.api.domain.gpt.service;
+package com.poemfoot.api.service;
 
-import com.poemfoot.api.domain.gpt.domain.GptAnswer;
-import com.poemfoot.api.domain.gpt.repository.GptAnswerRepository;
+import com.poemfoot.api.domain.GptAnswer;
+import com.poemfoot.api.repository.GptAnswerRepository;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 
 import java.util.List;

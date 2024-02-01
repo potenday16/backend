@@ -1,7 +1,7 @@
-package com.poemfoot.api.domain.member.controller;
+package com.poemfoot.api.controller;
 
-import com.poemfoot.api.domain.member.repository.MemberRepository;
-import com.poemfoot.api.domain.member.domain.Member;
+import com.poemfoot.api.repository.MemberRepository;
+import com.poemfoot.api.domain.Member;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.poemfoot.api.global.config;
+package com.poemfoot.api.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;

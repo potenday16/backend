@@ -1,10 +1,10 @@
 package com.poemfoot.api.domain.gpt.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-import com.poemfoot.api.domain.gpt.domain.GptAnswer;
-import com.poemfoot.api.domain.gpt.domain.GptQuestion;
+import com.poemfoot.api.domain.GptQuestion;
+import com.poemfoot.api.service.GptAnswerService;
+import com.poemfoot.api.service.GptQuestionService;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 import java.util.List;

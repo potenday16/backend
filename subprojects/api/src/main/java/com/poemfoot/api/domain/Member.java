@@ -1,4 +1,4 @@
-package com.poemfoot.api.domain.member.domain;
+package com.poemfoot.api.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,11 +1,10 @@
-package com.poemfoot.api.domain.gpt.service;
+package com.poemfoot.api.service;
 
-import com.poemfoot.api.domain.gpt.domain.GptAnswer;
-import com.poemfoot.api.domain.gpt.domain.GptQuestion;
-import com.poemfoot.api.domain.gpt.repository.GptQuestionRepository;
+import com.poemfoot.api.domain.GptAnswer;
+import com.poemfoot.api.domain.GptQuestion;
+import com.poemfoot.api.repository.GptQuestionRepository;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
-import com.poemfoot.gpt.exception.badrequest.GptOverRequestException;
 import com.poemfoot.gpt.exception.toomanyrequest.GptTooManyRequestException;
 import com.poemfoot.gpt.service.GptPoemProvider;
 
