@@ -25,12 +25,22 @@ public class Poem extends BaseTime{
     @Column(name = "title")
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 500, nullable = false)
     private String content;
 
     @Column(name = "words")
     private String words;
-
+    
+    @Column(name = "gpt_request_hash")
+    private String gptRequestHash;
+    
     @OneToMany(mappedBy = "poem")
     private List<Card> cards = new ArrayList<>();
+
+    public Poem(String title, String content, String words, String gptRequestHash) {
+        this.title = title;
+        this.content = content;
+        this.words = words;
+        this.gptRequestHash = gptRequestHash;
+    }
 }

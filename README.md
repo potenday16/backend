@@ -92,16 +92,18 @@ docker login poten16.kr.ncr.ntruss.com
   - id
   - memberId
   - poemId
-  - backGroundImageId
+  - font
+  - fontColor
+  - backGround
+  - coordinates
+
 - Poem (= ChatGptResult)
   - id
   - gptRequestHash (4단어 해쉬 처리) : unique key
+  - title
+  - words
+  - poemId
   - content : VARCHAR(255)
-- BackGroundImage  (배경사진 개수 * (배경효과 개수 + 1))
-  - id
-  - (Optional) usable (Y/N)
-  - url (이미지 s3 url)
-  - 배경효과 (enum BackGroundEffect::name)
 
 - W3wResult
   - id

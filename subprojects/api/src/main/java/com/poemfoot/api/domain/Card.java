@@ -1,6 +1,7 @@
 package com.poemfoot.api.domain;
 
 import com.poemfoot.api.domain.member.Member;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,17 +24,13 @@ public class Card extends BaseTime{
     @Column(name = "card_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "poem_id")
     private Poem poem;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "background_id")
-    private BackGroundImage backGroundImage;
 
     public Card(Member member, Poem poem, BackGroundImage backGroundImage) {
         this.member = member;

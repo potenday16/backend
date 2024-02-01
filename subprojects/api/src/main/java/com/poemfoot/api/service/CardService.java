@@ -21,13 +21,6 @@ public class CardService {
     private final CardRepository cardRepository;
     private final MemberRepository memberRepository;
 
-    public CardListResponse findCards(String deviceId) {
-        Member findMember = memberRepository.findFirstByDeviceId(deviceId)
-                .orElseThrow(NotFoundMemberException::new);
-
-        return CardListResponse.of(getCards(findMember.getId()));
-    }
-
     public CardResponse findCard(Long cardId) {
         Card findCard = cardRepository.findById(cardId)
                 .orElseThrow(NotFoundCardException::new);
@@ -35,8 +28,15 @@ public class CardService {
         return CardResponse.of(findCard);
     }
 
+    public CardListResponse findCards(String deviceId) {
+        Member findMember = memberRepository.findFirstByDeviceId(deviceId)
+                .orElseThrow(NotFoundMemberException::new);
+
+        return CardListResponse.of(getCards(findMember.getId()));
+    }
+
     private List<CardResponse> getCards(Long memberId) {
-        List<Card> cards = cardRepository.findByMember(memberId);
+        List<Card> cards = cardRepository.findByMemberId(memberId);
 
         return cards.stream()
                 .map(CardResponse::of)
