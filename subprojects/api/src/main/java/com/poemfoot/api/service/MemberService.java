@@ -3,7 +3,8 @@ package com.poemfoot.api.service;
 import com.poemfoot.api.domain.member.DeviceOsType;
 import com.poemfoot.api.domain.member.Member;
 import com.poemfoot.api.dto.request.MemberRequest;
-import com.poemfoot.api.dto.response.MemberResponse;
+import com.poemfoot.api.dto.response.member.MemberCheckResponse;
+import com.poemfoot.api.dto.response.member.MemberResponse;
 import com.poemfoot.api.exception.badrequest.InvalidMemberException;
 import com.poemfoot.api.repository.MemberRepository;
 import java.util.Optional;
@@ -28,6 +29,11 @@ public class MemberService {
         memberRepository.save(member);
 
         return MemberResponse.of(member.getId(), member.getNickname());
+    }
+
+    public MemberCheckResponse findSavedMember(String deviceId){
+        Optional<Member> findMember = memberRepository.findFirstByDeviceId(deviceId);
+        return MemberCheckResponse.from(findMember.isPresent());
     }
 
     private void checkSavedMember(String deviceId) {

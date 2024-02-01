@@ -1,4 +1,4 @@
-package com.poemfoot.api.dto.response;
+package com.poemfoot.api.dto.response.member;
 
 public record MemberResponse(
         Long id,

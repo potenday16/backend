@@ -3,12 +3,9 @@ package com.poemfoot.api.controller;
 import static com.poemfoot.api.config.CommonConfig.DEVICE_ID;
 
 import com.poemfoot.api.dto.request.MemberRequest;
-import com.poemfoot.api.dto.response.MemberResponse;
-import com.poemfoot.api.repository.MemberRepository;
-import com.poemfoot.api.domain.member.Member;
+import com.poemfoot.api.dto.response.member.MemberCheckResponse;
+import com.poemfoot.api.dto.response.member.MemberResponse;
 import com.poemfoot.api.service.MemberService;
-import jakarta.annotation.PostConstruct;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +24,15 @@ public class MemberController {
     @PostMapping
     public ResponseEntity<MemberResponse> saveMember(
             @RequestHeader(DEVICE_ID) String deviceId,
-            @RequestBody MemberRequest memberRequest) {
+            @RequestBody MemberRequest memberRequest
+    ) {
+        return ResponseEntity.ok(memberService.saveMember(deviceId, memberRequest));
+    }
 
-        MemberResponse response = memberService.saveMember(deviceId, memberRequest);
-        return ResponseEntity.ok(response);
+    @GetMapping("/check")
+    public ResponseEntity<MemberCheckResponse> findSavedMember(
+            @RequestHeader(DEVICE_ID) String deviceId
+    ){
+        return ResponseEntity.ok(memberService.findSavedMember(deviceId));
     }
 }
