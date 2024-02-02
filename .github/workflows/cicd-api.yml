@@ -13,7 +13,9 @@ env:
   DOCKER_IMAGE_NAME: poten16-server
   DOCKER_CONTAINER_NAME: poten16-server
   POTEN16_SERVER_PORT: 8080
-
+  MYSQL_URL: jdbc:mysql://db-lbpvf.pub-cdb.ntruss.com:3306/poten16?useSSL=false&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=UTF-8
+  GPT_REQUEST_COUNT: 50
+  W3W_REQUEST_COUNT: 50
 jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
@@ -63,5 +65,4 @@ jobs:
           docker stop ${{ env.DOCKER_CONTAINER_NAME }} || true
           docker rm ${{ env.DOCKER_CONTAINER_NAME }} || true
           docker pull ${{ env.DOCKER_REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }} 
-          chmod +x /root/scripts/run_docker.sh
-          /root/scripts/run_docker.sh
+          docker run -d --name ${{ env.DOCKER_CONTAINER_NAME }} -p ${{ env.POTEN16_SERVER_PORT }}:8080 -e W3W_API_KEY=${{ secrets.W3W_API_KEY }} -e GPT_TOKEN=${{ secrets.GPT_TOKEN }} -e MYSQL_URL=${{ env.MYSQL_URL }} -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} -e GPT_REQUEST_COUNT=${{ env.GPT_REQUEST_COUNT }} -e W3W_REQUEST_COUNT=${{ env.W3W_REQUEST_COUNT }} ${{ env.DOCKER_REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }} sleep infinity
