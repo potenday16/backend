@@ -64,4 +64,4 @@ jobs:
           docker rm ${{ env.DOCKER_CONTAINER_NAME }} || true
           docker pull ${{ env.DOCKER_REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }} 
           chmod +x /root/scripts/run_docker.sh
-          /root/scripts/run_docker.sh ${{ env.DOCKER_IMAGE_TAG }}
+          /root/scripts/run_docker.sh
