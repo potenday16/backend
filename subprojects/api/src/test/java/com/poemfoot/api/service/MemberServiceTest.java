@@ -42,6 +42,7 @@ class MemberServiceTest {
     @DisplayName("사용자를 저장한다.")
     void saveMemberTest() {
         MemberRequest memberRequest = new MemberRequest(nickname, deviceIOS);
+        int beforeMemberSize = memberRepository.findAll().size();
         MemberResponse memberResponse = memberService.saveMember(deviceId, memberRequest);
 
         Member member = memberRepository.findById(memberResponse.id())
@@ -51,13 +52,13 @@ class MemberServiceTest {
         assertThat(member.getDeviceId()).isEqualTo(deviceId);
         assertThat(member.getNickname()).isEqualTo(memberRequest.nickname());
         assertThat(member.getDeviceOs()).isEqualTo(DeviceOsType.IOS);
-        assertThat(members).hasSize(1);
+        assertThat(members).hasSize(beforeMemberSize + 1);
     }
 
     @Test
     @DisplayName("사용자 기기 os를 정확하게 등록한다.")
     void saveMemberDeviceOsTest() {
-        String androidDeviceId = "test";
+        String androidDeviceId = "test123";
         MemberRequest IOSRequest = new MemberRequest(nickname, deviceIOS);
         MemberRequest AndroidRequest = new MemberRequest(nickname, deviceAndroid);
         MemberResponse IOSResponse = memberService.saveMember(deviceId, IOSRequest);

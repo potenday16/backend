@@ -90,10 +90,10 @@ class CardServiceTest {
     }
 
     @Test
-    @DisplayName("일기 전체 조회 시, 특정 DeviceId가 존재하지 않는 경우 예외처리한다.")
+    @DisplayName("카드 전체 조회 시, 특정 DeviceId가 존재하지 않는 경우 예외처리한다.")
     void notFoundMemberTest() {
         assertThrowsExactly(NotFoundMemberException.class,
-                () -> cardService.findCards("test"));
+                () -> cardService.findCards("test123"));
     }
 
     @Test
