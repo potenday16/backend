@@ -38,9 +38,16 @@ public class Member extends BaseTime {
     @Column(name = "nickname")
     private String nickname;
 
+    private Long maxNumber;
+
     public Member(String deviceId, DeviceOsType deviceOs, String nickname) {
         this.deviceId = deviceId;
         this.deviceOs = deviceOs;
         this.nickname = nickname;
+        this.maxNumber = 0L;
+    }
+
+    public Long plusMaxNumber(){
+        return ++maxNumber;
     }
 }

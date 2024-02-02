@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.poemfoot.api.domain.Card;
 import com.poemfoot.api.domain.Poem;
+import com.poemfoot.api.domain.Words;
 import com.poemfoot.api.domain.member.DeviceOsType;
 import com.poemfoot.api.domain.member.Member;
 import com.poemfoot.api.dto.response.card.CardListResponse;
@@ -12,6 +13,7 @@ import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.exception.notfound.card.NotFoundCardException;
 import com.poemfoot.api.exception.notfound.member.NotFoundMemberException;
 import com.poemfoot.api.repository.CardRepository;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,23 +32,33 @@ class CardServiceTest {
 
     String deviceId;
     String nickname;
+    String font;
+    String fontColor;
+    String background;
+    String latitude;
+    String longitude;
     private Member member;
     private Poem poem;
-    private BackGroundImage backGroundImage;
 
     @BeforeEach
     void beforeEach() {
         deviceId = "HDFA3dfd23";
         nickname = "test";
         member = new Member(deviceId, DeviceOsType.IOS, nickname);
-        poem = new Poem("title", "content", "words", "gptRequestHash");
-        backGroundImage = new BackGroundImage();
+        font = "sans-serif";
+        fontColor = "black";
+        background = "white";
+        latitude = "37.5475276";
+        longitude = "126.978611";
+
+        Words words = new Words(List.of("word1", "word2", "word3"));
+        poem = new Poem("title", "content", words, "gptRequestHash");
     }
 
     @Test
     @DisplayName("동일한 id를 가진 card에 대해서는 동일한 카드를 조회한다.")
     void findCardTest() {
-        Card card = new Card(member, poem, backGroundImage);
+        Card card = new Card(member, poem, font, fontColor, background, latitude, longitude);
         Card savedCard = cardRepository.save(card);
 
         CardResponse cardResponse = cardService.findCard(savedCard.getId());
@@ -65,7 +77,7 @@ class CardServiceTest {
     @Test
     @DisplayName("특정 사용자가 저장한 카드를 조회한다.")
     void findCardsTest(){
-        Card card = new Card(member, poem, backGroundImage);
+        Card card = new Card(member, poem, font, fontColor, background, latitude, longitude);
         Card savedCard = cardRepository.save(card);
 
         CardListResponse cardListResponse = cardService.findCards(deviceId);

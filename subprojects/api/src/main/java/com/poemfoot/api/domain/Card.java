@@ -17,12 +17,24 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Card extends BaseTime{
+public class Card extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id")
     private Long id;
+
+    private Long number;
+
+    private String font;
+
+    private String fontColor;
+
+    private String background;
+
+    private String latitude;
+
+    private String longitude;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_id")
@@ -32,19 +44,16 @@ public class Card extends BaseTime{
     @JoinColumn(name = "poem_id")
     private Poem poem;
 
-    public Card(Member member, Poem poem, BackGroundImage backGroundImage) {
+    public Card(
+            Member member, Poem poem,
+            String font, String fontColor, String background, String latitude, String longitude) {
+        this.font = font;
+        this.fontColor = fontColor;
+        this.background = background;
+        this.number = member.plusMaxNumber();
         this.member = member;
-        setPoem(poem);
-        setBackGroundImage(backGroundImage);
-    }
-
-    private void setBackGroundImage(BackGroundImage backGroundImage) {
-        this.backGroundImage = backGroundImage;
-        backGroundImage.getCards().add(this);
-    }
-
-    private void setPoem(Poem poem) {
         this.poem = poem;
-        poem.getCards().add(this);
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

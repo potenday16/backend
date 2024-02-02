@@ -1,6 +1,8 @@
 package com.poemfoot.api.domain;
 
+import com.poemfoot.api.converter.WordsConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,16 +30,13 @@ public class Poem extends BaseTime{
     @Column(name = "content", length = 500, nullable = false)
     private String content;
 
-    @Column(name = "words")
-    private String words;
+    @Convert(converter = WordsConverter.class)
+    private Words words;
     
     @Column(name = "gpt_request_hash")
     private String gptRequestHash;
-    
-    @OneToMany(mappedBy = "poem")
-    private List<Card> cards = new ArrayList<>();
 
-    public Poem(String title, String content, String words, String gptRequestHash) {
+    public Poem(String title, String content, Words words, String gptRequestHash) {
         this.title = title;
         this.content = content;
         this.words = words;
