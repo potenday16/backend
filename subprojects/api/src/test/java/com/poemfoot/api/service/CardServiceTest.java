@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.poemfoot.api.domain.Card;
-import com.poemfoot.api.domain.Poem;
+import com.poemfoot.api.domain.poem.Poem;
 import com.poemfoot.api.domain.Words;
 import com.poemfoot.api.domain.member.DeviceOsType;
 import com.poemfoot.api.domain.member.Member;
@@ -35,8 +35,8 @@ class CardServiceTest {
     String font;
     String fontColor;
     String background;
-    String latitude;
-    String longitude;
+    double latitude;
+    double longitude;
     private Member member;
     private Poem poem;
 
@@ -48,8 +48,8 @@ class CardServiceTest {
         font = "sans-serif";
         fontColor = "black";
         background = "white";
-        latitude = "37.5475276";
-        longitude = "126.978611";
+        latitude = 37.5475276;
+        longitude = 126.978611;
 
         Words words = new Words(List.of("word1", "word2", "word3"));
         poem = new Poem("title", "content", words, "gptRequestHash");
@@ -90,5 +90,29 @@ class CardServiceTest {
     void notFoundMemberTest() {
         assertThrowsExactly(NotFoundMemberException.class,
                 () -> cardService.findCards("test"));
+    }
+
+    @Test
+    @DisplayName("카드를 생성한다.")
+    void saveCardTest() {
+        //TODO
+    }
+
+    @Test
+    @DisplayName("카드 번호를 현재 사용자의 maxNumber+1로 증가시킨다.")
+    void plusCardNumberTest() {
+        //TODO
+    }
+
+    @Test
+    @DisplayName("카드 생성이 유효한 경우 카드를 생성한다.")
+    void checkValidCreateCardTest() {
+        //TODO
+    }
+
+    @Test
+    @DisplayName("카드 생성이 유효하지 않은 경우 예외처리한다.")
+    void checkNotValidCreateCardTest() {
+        //TODO
     }
 }

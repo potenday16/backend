@@ -127,7 +127,7 @@ docker login poten16.kr.ncr.ntruss.com
 - [x] GET /api/v1/cards : 특정 요청자의 카드 목록
 - [x] GET /api/v1/cards/{id} : 특정 카드 조회
 - [ ] GET /api/v1/cards/readiness : Open Api(gpt,w3w) 유효성 검증 & 사용 제한 횟수 HttpStatus: 500
-- [ ] POST /api/v1/cards : 카드 생성
+- [x] POST /api/v1/cards : 카드 생성
   - 카드 넘버링도 저장?
   - RequestBody
     - userId

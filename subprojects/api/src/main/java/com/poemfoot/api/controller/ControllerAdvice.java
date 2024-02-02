@@ -1,6 +1,7 @@
 package com.poemfoot.api.controller;
 
 import com.poemfoot.api.dto.response.error.ErrorResponse;
+import com.poemfoot.api.exception.ApiException;
 import com.poemfoot.gpt.exception.GptException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Objects;
@@ -87,6 +88,11 @@ public class ControllerAdvice {
 
     @ExceptionHandler(GptException.class)
     public ResponseEntity<ErrorResponse> handleGptException(GptException e) {
+        return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<ErrorResponse> handleGptException(ApiException e) {
         return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getCode(), e.getMessage()));
     }
 

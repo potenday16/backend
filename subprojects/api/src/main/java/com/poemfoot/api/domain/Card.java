@@ -1,6 +1,8 @@
 package com.poemfoot.api.domain;
 
 import com.poemfoot.api.domain.member.Member;
+import com.poemfoot.api.domain.poem.Poem;
+import com.poemfoot.api.dto.request.CardRequest;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,9 +34,9 @@ public class Card extends BaseTime {
 
     private String background;
 
-    private String latitude;
+    private double latitude;
 
-    private String longitude;
+    private double longitude;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_id")
@@ -46,7 +48,7 @@ public class Card extends BaseTime {
 
     public Card(
             Member member, Poem poem,
-            String font, String fontColor, String background, String latitude, String longitude) {
+            String font, String fontColor, String background, double latitude, double longitude) {
         this.font = font;
         this.fontColor = fontColor;
         this.background = background;
@@ -55,5 +57,17 @@ public class Card extends BaseTime {
         this.poem = poem;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Card(Member member, Poem poem,
+            CardRequest request) {
+        this.member = member;
+        this.poem = poem;
+        this.number = member.plusMaxNumber();
+        this.font = request.font();
+        this.fontColor = request.fontColor();
+        this.background = request.background();
+        this.latitude = request.latitude();
+        this.longitude = request.longitude();
     }
 }

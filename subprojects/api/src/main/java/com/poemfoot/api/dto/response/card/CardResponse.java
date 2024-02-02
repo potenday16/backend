@@ -9,6 +9,7 @@ import lombok.Builder;
 @Builder
 public record CardResponse(
         Long id,
+        Long number,
         Timestamp createdTime,
         String nickname,
         String title,
@@ -16,11 +17,14 @@ public record CardResponse(
         Words words,
         String font,
         String fontColor,
-        String background
+        String background,
+        double latitude,
+        double longitude
 ) {
     public static CardResponse of(Card card){
         return CardResponse.builder()
                 .id(card.getId())
+                .number(card.getNumber())
                 .createdTime(card.getCreatedTime())
                 .nickname(card.getMember().getNickname())
                 .font(card.getFont())
@@ -29,6 +33,8 @@ public record CardResponse(
                 .title(card.getPoem().getTitle())
                 .content(card.getPoem().getContent())
                 .words(card.getPoem().getWords())
+                .latitude(card.getLatitude())
+                .longitude(card.getLongitude())
                 .build();
 
     }

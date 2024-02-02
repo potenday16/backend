@@ -2,6 +2,7 @@ package com.poemfoot.api.controller;
 
 import static com.poemfoot.api.config.CommonConstants.DEVICE_ID;
 
+import com.poemfoot.api.dto.request.CardRequest;
 import com.poemfoot.api.dto.response.card.CardListResponse;
 import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.service.CardService;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +38,15 @@ public class CardController {
     @Operation(summary = "특정 카드 조회")
     public ResponseEntity<CardResponse> findCard(
             @PathVariable("id") Long cardId
-    ){
+    ) {
         return ResponseEntity.ok(cardService.findCard(cardId));
+    }
+
+    @PostMapping
+    public ResponseEntity<CardResponse> saveCard(
+            @RequestHeader(DEVICE_ID) String deviceId,
+            @RequestBody CardRequest cardRequest
+    ) {
+        return ResponseEntity.ok(cardService.saveCard(deviceId, cardRequest));
     }
 }

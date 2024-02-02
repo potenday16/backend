@@ -3,17 +3,25 @@ package com.poemfoot.api.converter;
 import com.poemfoot.api.domain.Words;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import java.util.Arrays;
 
 @Converter(autoApply = true)
 public class WordsConverter implements AttributeConverter<Words, String> {
+    private static final String WORDS_DELIMITER = ",";
 
     @Override
     public String convertToDatabaseColumn(Words attribute) {
-        return null;
+        if (attribute == null) {
+            return null;
+        }
+        return String.join(WORDS_DELIMITER, attribute.words());
     }
 
     @Override
     public Words convertToEntityAttribute(String dbData) {
-        return null;
+        if (dbData == null) {
+            return null;
+        }
+        return Words.of(Arrays.stream(dbData.split(WORDS_DELIMITER)).toList());
     }
 }

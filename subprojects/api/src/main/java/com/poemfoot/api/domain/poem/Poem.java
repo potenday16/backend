@@ -1,6 +1,8 @@
-package com.poemfoot.api.domain;
+package com.poemfoot.api.domain.poem;
 
 import com.poemfoot.api.converter.WordsConverter;
+import com.poemfoot.api.domain.BaseTime;
+import com.poemfoot.api.domain.Words;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -11,13 +13,14 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Poem extends BaseTime{
+public class Poem extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +36,6 @@ public class Poem extends BaseTime{
     @Convert(converter = WordsConverter.class)
     private Words words;
     
-    @Column(name = "gpt_request_hash")
     private String gptRequestHash;
 
     public Poem(String title, String content, Words words, String gptRequestHash) {
