@@ -75,12 +75,15 @@ docker login poten16.kr.ncr.ntruss.com
 ```
 
 # 환경변수
-|이름 | 설명                          |
-|-- |-----------------------------|
-|MYSQL_URL | MYSQL 주소입니다 (JDBC 형태여야 합니다) |
-|MYSQL_USERNAME | MYSQL 사용자 명 입니다.            |
-|MYSQL_PASSWORD | MYSQL 비밀번호 입니다.             |
-|GPT_TOKEN | GPT API-KEY 입니다.|
+| 이름                | 설명                          |
+|-------------------|-----------------------------|
+| MYSQL_URL         | MYSQL 주소입니다 (JDBC 형태여야 합니다) |
+| MYSQL_USERNAME    | MYSQL 사용자 명 입니다.            |
+| MYSQL_PASSWORD    | MYSQL 비밀번호 입니다.             |
+| GPT_TOKEN         | GPT API-KEY 입니다.            |
+| W3W_API_KEY       | W3W API-KEY 입니다.            |
+| GPT_REQUEST_COUNT | GPT 요청 제한 횟수 입니다.           |
+| W3W_REQUEST_COUNT | W3W 요청 제한 횟수 입니다.           |
 
 # Domain 모델링
 - Member
