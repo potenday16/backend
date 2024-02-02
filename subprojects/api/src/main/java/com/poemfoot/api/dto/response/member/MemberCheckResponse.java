@@ -1,9 +1,10 @@
 package com.poemfoot.api.dto.response.member;
 
 public record MemberCheckResponse(
-        Boolean isRegistered
+        Boolean isRegistered,
+        String nickname
 ) {
-    public static MemberCheckResponse from(Boolean isRegistered) {
-        return new MemberCheckResponse(isRegistered);
+    public static MemberCheckResponse of(Boolean isRegistered, String nickname) {
+        return new MemberCheckResponse(isRegistered, nickname);
     }
 }

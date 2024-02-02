@@ -31,9 +31,11 @@ public class MemberService {
         return MemberResponse.of(member.getId(), member.getNickname());
     }
 
-    public MemberCheckResponse findSavedMember(String deviceId){
+    public MemberCheckResponse findSavedMember(String deviceId) {
         Optional<Member> findMember = memberRepository.findFirstByDeviceId(deviceId);
-        return MemberCheckResponse.from(findMember.isPresent());
+        String nickname = findMember.map(Member::getNickname).orElse(null);
+
+        return MemberCheckResponse.of(findMember.isPresent(), nickname);
     }
 
     private void checkSavedMember(String deviceId) {
