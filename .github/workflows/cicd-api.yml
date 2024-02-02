@@ -9,7 +9,7 @@ on:
     branches:
       - main
 env:
-  DOCKER_REGISTRY_URL: registry-ncp.example.com
+  DOCKER_REGISTRY_URL: poten16.kr.ncr.ntruss.com
   DOCKER_IMAGE_NAME: poten16-server
   DOCKER_CONTAINER_NAME: poten16-server
 
