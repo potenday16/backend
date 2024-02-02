@@ -13,9 +13,11 @@ import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.exception.notfound.card.NotFoundCardException;
 import com.poemfoot.api.exception.notfound.member.NotFoundMemberException;
 import com.poemfoot.api.repository.CardRepository;
+import com.poemfoot.gpt.config.GptConfig;
+import com.poemfoot.gpt.exception.server.GptOverRequestException;
+import com.poemfoot.w3w.config.W3wConfig;
+import com.poemfoot.w3w.exception.server.W3wOverRequestException;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.Callable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -78,9 +80,9 @@ class CardServiceTest {
 
     @Test
     @DisplayName("특정 사용자가 저장한 카드를 조회한다.")
-    void findCardsTest(){
+    void findCardsTest() {
         Card card = new Card(member, poem, font, fontColor, background, latitude, longitude);
-        Card savedCard = cardRepository.save(card);
+        cardRepository.save(card);
 
         CardListResponse cardListResponse = cardService.findCards(deviceId);
 
@@ -106,7 +108,8 @@ class CardServiceTest {
         assertThat(findCard.getId()).isEqualTo(savedCard.getId());
         assertThat(findCard.getNumber()).isEqualTo(savedCard.getNumber());
         assertThat(findCard.getPoem().getContent()).isEqualTo(savedCard.getPoem().getContent());
-        assertThat(findCard.getMember().getDeviceId()).isEqualTo(savedCard.getMember().getDeviceId());
+        assertThat(findCard.getMember().getDeviceId()).isEqualTo(
+                savedCard.getMember().getDeviceId());
         assertThat(findCard.getFont()).isEqualTo(savedCard.getFont());
         assertThat(findCard.getFontColor()).isEqualTo(savedCard.getFontColor());
         assertThat(findCard.getBackground()).isEqualTo(savedCard.getBackground());
@@ -129,12 +132,28 @@ class CardServiceTest {
     @Test
     @DisplayName("카드 생성이 유효한 경우 카드를 생성한다.")
     void checkValidCreateCardTest() {
+        GptConfig.MAX_TOTAL_REQUEST_COUNT = 1;
+        W3wConfig.MAX_TOTAL_REQUEST_COUNT = 1;
         assertThat(cardService.checkReadiness().isReady()).isTrue();
     }
 
     @Test
-    @DisplayName("카드 생성이 유효하지 않은 경우 예외처리한다.")
-    void checkNotValidCreateCardTest() {
-        //TODO
+    @DisplayName("[GPT] 카드 생성이 유효하지 않은 경우 예외처리한다.")
+    void checkNotGptValidCreateCardTest() {
+        GptConfig.MAX_TOTAL_REQUEST_COUNT = 0;
+        W3wConfig.MAX_TOTAL_REQUEST_COUNT = 1;
+
+        assertThrowsExactly(GptOverRequestException.class,
+                () -> cardService.checkReadiness());
+    }
+
+    @Test
+    @DisplayName("[W3W] 카드 생성이 유효하지 않은 경우 예외처리한다.")
+    void checkNotW3wValidCreateCardTest() {
+        GptConfig.MAX_TOTAL_REQUEST_COUNT = 1;
+        W3wConfig.MAX_TOTAL_REQUEST_COUNT = 0;
+
+        assertThrowsExactly(W3wOverRequestException.class,
+                () -> cardService.checkReadiness());
     }
 }
