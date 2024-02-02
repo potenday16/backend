@@ -10,7 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Configuration
 public class W3wConfig {
 
-    public static final int MAX_TOTAL_REQUEST_COUNT = 1;
+    @Value("${w3w.request.count}")
+    public static int MAX_TOTAL_REQUEST_COUNT;
     public static final AtomicInteger totalRequestCount = new AtomicInteger(0);
 
     @Value("${w3w.api.key}")

@@ -25,8 +25,9 @@ public class GptConfig {
             + " 형식은 제목,내용을 가지는 json형식으로 반환해줘."
             + " 내용은 적당하게 줄바꿈을 해줘.";
     public static final String WORDS_DELIMITER = ", ";
-    public static final int MAX_TOTAL_REQUEST_COUNT = 1;
     public static final AtomicInteger totalRequestCount = new AtomicInteger(0);
+    @Value("${gpt.request.count}")
+    public static int MAX_TOTAL_REQUEST_COUNT;
 
     @Value("${gpt.token}")
     private String token;
