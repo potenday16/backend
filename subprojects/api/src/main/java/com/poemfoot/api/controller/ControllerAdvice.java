@@ -3,6 +3,7 @@ package com.poemfoot.api.controller;
 import com.poemfoot.api.dto.response.error.ErrorResponse;
 import com.poemfoot.api.exception.ApiException;
 import com.poemfoot.gpt.exception.GptException;
+import com.poemfoot.w3w.exception.W3wException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class ControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleInputFieldException(MethodArgumentNotValidException e) {
-        FieldError mainError = e.getFieldErrors().get(0);
+        FieldError mainError = e.getFieldErrors().getFirst();
         String[] errorInfo = Objects.requireNonNull(mainError.getDefaultMessage()).split(":");
 
         int code = Integer.parseInt(errorInfo[FIELD_ERROR_CODE_INDEX]);
@@ -92,7 +93,12 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<ErrorResponse> handleGptException(ApiException e) {
+    public ResponseEntity<ErrorResponse> handleApiException(ApiException e) {
+        return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(W3wException.class)
+    public ResponseEntity<ErrorResponse> handleW3wException(W3wException e) {
         return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getCode(), e.getMessage()));
     }
 

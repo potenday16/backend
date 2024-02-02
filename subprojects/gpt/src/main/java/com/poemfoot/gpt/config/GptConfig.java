@@ -26,24 +26,28 @@ public class GptConfig {
             + " 내용은 적당하게 줄바꿈을 해줘.";
     public static final String WORDS_DELIMITER = ", ";
     public static final AtomicInteger totalRequestCount = new AtomicInteger(0);
-    @Value("${gpt.request.count}")
-    public static int MAX_TOTAL_REQUEST_COUNT;
+    public static Integer MAX_TOTAL_REQUEST_COUNT;
 
     @Value("${gpt.token}")
     private String token;
 
     @Bean
-    public OpenAiService openAiService(){
+    public OpenAiService openAiService() {
         return new OpenAiService(token, Duration.ofSeconds(60));
     }
 
     @Bean
-    public GptPoemProvider gptPoemProvider(OpenAiService openAiService){
+    public GptPoemProvider gptPoemProvider(OpenAiService openAiService) {
         return new GptPoemProvider(openAiService);
     }
 
     @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
     public void resetCounter() {
         totalRequestCount.set(0);
+    }
+
+    @Value("${gpt.request.count}")
+    private void setMaxTotalRequestCount(int maxRequestCount) {
+        MAX_TOTAL_REQUEST_COUNT = maxRequestCount;
     }
 }

@@ -137,3 +137,6 @@ docker login poten16.kr.ncr.ntruss.com
 - ~~PUT /api/v1/cards/{id} : 카드 수정~~
 - ~~DELETE /api/v1/cards/{id} : 카드 삭제~~ (확인 필요)
 - [ ] GET /api/v1/cards/{id}/poem : 특정 카드의 시 조회
+---
+# TODO
+- [ ] W3W 캐시 처리

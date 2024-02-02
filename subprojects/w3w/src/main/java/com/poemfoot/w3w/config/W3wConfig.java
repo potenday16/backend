@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Configuration
 public class W3wConfig {
 
-    @Value("${w3w.request.count}")
     public static int MAX_TOTAL_REQUEST_COUNT;
     public static final AtomicInteger totalRequestCount = new AtomicInteger(0);
 
@@ -25,5 +24,10 @@ public class W3wConfig {
     @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
     public void resetCounter() {
         totalRequestCount.set(0);
+    }
+
+    @Value("${w3w.request.count}")
+    private void setMaxTotalRequestCount(int maxRequestCount) {
+        MAX_TOTAL_REQUEST_COUNT = maxRequestCount;
     }
 }
