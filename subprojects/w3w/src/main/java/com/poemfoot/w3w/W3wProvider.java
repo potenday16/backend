@@ -8,4 +8,6 @@ public interface W3wProvider {
     W3wWordsResponse getWords(double latitude, double longitude, Locale locale);
 
     W3wCoordinatesResponse getCoordinates(String word1, String word2, String word3);
+
+    boolean validateW3WRequest();
 }

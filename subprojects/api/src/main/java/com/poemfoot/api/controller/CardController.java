@@ -34,6 +34,15 @@ public class CardController {
         return ResponseEntity.ok(cardService.findCards(deviceId));
     }
 
+    @PostMapping
+    @Operation(summary = "카드 생성")
+    public ResponseEntity<CardResponse> saveCard(
+            @RequestHeader(DEVICE_ID) String deviceId,
+            @RequestBody CardRequest cardRequest
+    ) {
+        return ResponseEntity.ok(cardService.saveCard(deviceId, cardRequest));
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "특정 카드 조회")
     public ResponseEntity<CardResponse> findCard(
@@ -42,11 +51,9 @@ public class CardController {
         return ResponseEntity.ok(cardService.findCard(cardId));
     }
 
-    @PostMapping
-    public ResponseEntity<CardResponse> saveCard(
-            @RequestHeader(DEVICE_ID) String deviceId,
-            @RequestBody CardRequest cardRequest
-    ) {
-        return ResponseEntity.ok(cardService.saveCard(deviceId, cardRequest));
+    @GetMapping("/readiness")
+    @Operation(summary = "카드 작성 유효성 검사")
+    public ResponseEntity<Object> checkReadySaveCard(){
+        return ResponseEntity.ok(cardService.checkReadiness());
     }
 }

@@ -5,6 +5,7 @@ import com.poemfoot.api.domain.member.Member;
 import com.poemfoot.api.domain.poem.Poem;
 import com.poemfoot.api.dto.request.CardRequest;
 import com.poemfoot.api.dto.response.card.CardListResponse;
+import com.poemfoot.api.dto.response.card.CardReadyResponse;
 import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.exception.notfound.card.NotFoundCardException;
 import com.poemfoot.api.exception.notfound.member.NotFoundMemberException;
@@ -13,6 +14,7 @@ import com.poemfoot.api.repository.MemberRepository;
 import com.poemfoot.api.repository.PoemRepository;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
+import com.poemfoot.gpt.service.GptPoemProvider;
 import com.poemfoot.w3w.W3wProvider;
 import com.poemfoot.w3w.dto.W3wWords;
 import com.poemfoot.w3w.dto.W3wWordsResponse;
@@ -32,6 +34,7 @@ public class CardService {
     private final CardRepository cardRepository;
     private final MemberRepository memberRepository;
     private final W3wProvider w3wProvider;
+    private final GptPoemProvider gptPoemProvider;
     private final PoemService poemService;
 
     public CardResponse findCard(Long cardId) {
@@ -50,6 +53,8 @@ public class CardService {
 
     @Transactional
     public CardResponse saveCard(String deviceId, CardRequest request) {
+        checkReadiness();
+
         Member findMember = memberRepository.findFirstByDeviceId(deviceId)
                 .orElseThrow(NotFoundMemberException::new);
         W3wWordsResponse w3wResponse = w3wProvider.getWords(request.latitude(), request.longitude(),
@@ -57,6 +62,11 @@ public class CardService {
 
         Card card = cardRepository.save(new Card(findMember, getPoem(request, w3wResponse), request));
         return CardResponse.of(card);
+    }
+
+    public CardReadyResponse checkReadiness(){
+        boolean isReadiness = gptPoemProvider.validateGptRequest() && w3wProvider.validateW3WRequest();
+        return CardReadyResponse.from(isReadiness);
     }
 
     private List<CardResponse> getCards(Long memberId) {

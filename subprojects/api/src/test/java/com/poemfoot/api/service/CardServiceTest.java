@@ -129,7 +129,7 @@ class CardServiceTest {
     @Test
     @DisplayName("카드 생성이 유효한 경우 카드를 생성한다.")
     void checkValidCreateCardTest() {
-        //TODO
+        assertThat(cardService.checkReadiness().isReady()).isTrue();
     }
 
     @Test
