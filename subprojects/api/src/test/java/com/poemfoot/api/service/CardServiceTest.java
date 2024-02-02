@@ -14,6 +14,8 @@ import com.poemfoot.api.exception.notfound.card.NotFoundCardException;
 import com.poemfoot.api.exception.notfound.member.NotFoundMemberException;
 import com.poemfoot.api.repository.CardRepository;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.Callable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -95,13 +97,33 @@ class CardServiceTest {
     @Test
     @DisplayName("카드를 생성한다.")
     void saveCardTest() {
-        //TODO
+        Card card = new Card(member, poem, font, fontColor, background, latitude, longitude);
+        Card savedCard = cardRepository.save(card);
+
+        Card findCard = cardRepository.findById(savedCard.getId())
+                .orElseThrow(NotFoundCardException::new);
+
+        assertThat(findCard.getId()).isEqualTo(savedCard.getId());
+        assertThat(findCard.getNumber()).isEqualTo(savedCard.getNumber());
+        assertThat(findCard.getPoem().getContent()).isEqualTo(savedCard.getPoem().getContent());
+        assertThat(findCard.getMember().getDeviceId()).isEqualTo(savedCard.getMember().getDeviceId());
+        assertThat(findCard.getFont()).isEqualTo(savedCard.getFont());
+        assertThat(findCard.getFontColor()).isEqualTo(savedCard.getFontColor());
+        assertThat(findCard.getBackground()).isEqualTo(savedCard.getBackground());
+        assertThat(findCard.getPoem().getContent()).isEqualTo(savedCard.getPoem().getContent());
     }
 
     @Test
     @DisplayName("카드 번호를 현재 사용자의 maxNumber+1로 증가시킨다.")
     void plusCardNumberTest() {
-        //TODO
+        Long beforeMaxNumber = member.getMaxNumber();
+        Long afterMaxNumber = beforeMaxNumber + 1;
+
+        Card card = new Card(member, poem, font, fontColor, background, latitude, longitude);
+        Card savedCard = cardRepository.save(card);
+
+        assertThat(savedCard.getNumber()).isEqualTo(afterMaxNumber);
+        assertThat(member.getMaxNumber()).isEqualTo(afterMaxNumber);
     }
 
     @Test

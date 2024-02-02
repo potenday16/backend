@@ -72,7 +72,7 @@ public class PoemService {
         return parseAnswer(response);
     }
 
-    public PoemAnswer parseAnswer(GptChatPoemResponse response) {
+    private PoemAnswer parseAnswer(GptChatPoemResponse response) {
 
         String jsonString = responseToMessage(response);
         jsonString = jsonString.substring(jsonString.indexOf("{"), jsonString.indexOf("}") + 1);
