@@ -64,6 +64,5 @@ jobs:
           docker rm ${{ env.DOCKER_CONTAINER_NAME }} || true
           docker pull ${{ env.DOCKER_REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} 
           docker run -d --name ${{ DOCKER_CONTAINER_NAME }} -p ${{ POTEN16_SERVER_PORT }}:8080 ${{ env.DOCKER_REGISTRY_URL }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }} 
-          cd scripts
-          chmod +x run_docker.sh
-          ./run_docker.sh ${{ env.DOCKER_IMAGE_TAG }}
+          chmod +x /root/scripts/run_docker.sh
+          /root/scripts/run_docker.sh ${{ env.DOCKER_IMAGE_TAG }}
