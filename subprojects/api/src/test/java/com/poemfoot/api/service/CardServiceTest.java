@@ -56,7 +56,8 @@ class CardServiceTest {
         longitude = 126.978611;
 
         Words words = new Words(List.of("word1", "word2", "word3"));
-        poem = new Poem("title", "content", words, "gptRequestHash");
+        String location = "서울";
+        poem = new Poem("title", "content", words, location, "gptRequestHash");
     }
 
     @Test

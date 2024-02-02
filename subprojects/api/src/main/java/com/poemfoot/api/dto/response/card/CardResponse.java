@@ -15,6 +15,7 @@ public record CardResponse(
         String title,
         String content,
         Words words,
+        String location,
         String font,
         String fontColor,
         String background,
@@ -33,6 +34,7 @@ public record CardResponse(
                 .title(card.getPoem().getTitle())
                 .content(card.getPoem().getContent())
                 .words(card.getPoem().getWords())
+                .location(card.getPoem().getLocation())
                 .latitude(card.getLatitude())
                 .longitude(card.getLongitude())
                 .build();

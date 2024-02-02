@@ -50,7 +50,8 @@ public class PoemService {
 
         Words saveWords = getWords(request);
         PoemAnswer answer = getAnswer(response);
-        return poemRepository.save(new Poem(answer.title(),answer.content(),saveWords,getHash(request)));
+        return poemRepository.save(new Poem(answer.title(),answer.content(),saveWords, location,
+                getHash(request)));
     }
 
     public Poem findPoem(List<String> words, String location) {

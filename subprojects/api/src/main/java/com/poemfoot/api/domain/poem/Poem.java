@@ -9,11 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,13 +31,16 @@ public class Poem extends BaseTime {
 
     @Convert(converter = WordsConverter.class)
     private Words words;
+
+    private String location;
     
     private String gptRequestHash;
 
-    public Poem(String title, String content, Words words, String gptRequestHash) {
+    public Poem(String title, String content, Words words, String location, String gptRequestHash) {
         this.title = title;
         this.content = content;
         this.words = words;
+        this.location = location;
         this.gptRequestHash = gptRequestHash;
     }
 }
