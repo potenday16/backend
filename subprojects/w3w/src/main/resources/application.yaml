@@ -1,3 +1,5 @@
 w3w:
   api:
     key: ${W3W_API_KEY}
+  request:
+    count: ${W3W_REQUEST_COUNT}

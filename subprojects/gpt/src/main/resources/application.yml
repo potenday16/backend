@@ -1,2 +1,4 @@
 gpt:
   token: ${GPT_TOKEN}
+  request:
+    count: ${GPT_REQUEST_COUNT}

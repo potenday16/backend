@@ -3,10 +3,9 @@ package com.poemfoot.gpt.service;
 import static com.poemfoot.gpt.config.GptConfig.MAX_TOTAL_REQUEST_COUNT;
 import static com.poemfoot.gpt.config.GptConfig.totalRequestCount;
 
-import com.poemfoot.gpt.config.GptConfig;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
-import com.poemfoot.gpt.exception.badrequest.GptOverRequestException;
+import com.poemfoot.gpt.exception.server.GptOverRequestException;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.service.OpenAiService;
 
@@ -26,7 +25,6 @@ public class GptPoemProvider {
 
     @Transactional
     public Optional<GptChatPoemResponse> completionChat(GptChatPoemRequest request) {
-
         validateGptRequest();
 
         ChatCompletionResult chatCompletion = openAiService.createChatCompletion(
@@ -37,10 +35,11 @@ public class GptPoemProvider {
         return Optional.empty();
     }
 
-    private void validateGptRequest() {
+    public boolean validateGptRequest() {
         if (totalRequestCount.get() >= MAX_TOTAL_REQUEST_COUNT) {
             throw new GptOverRequestException();
         }
+        return true;
     }
 
     private boolean gptRequestCountUp() {

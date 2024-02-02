@@ -16,3 +16,10 @@ spring:
         default_batch_fetch_size: 100
 gpt:
   token: test
+  request:
+    count: 0
+w3w:
+  api:
+    key: test
+  request:
+    count: 0

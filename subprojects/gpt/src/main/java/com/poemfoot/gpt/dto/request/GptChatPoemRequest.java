@@ -1,5 +1,7 @@
 package com.poemfoot.gpt.dto.request;
 
+import static com.poemfoot.gpt.config.GptConfig.*;
+
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import java.util.List;
@@ -12,13 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GptChatPoemRequest {
 
-    private static final String MODEL = "gpt-4-turbo-preview";
-    private static final String ROLE = "user";
-    private static final Integer MAX_TOKENS = 1;
-
     private List<String> words;
     private String location;
-
 
     public static ChatCompletionRequest of(GptChatPoemRequest request) {
         return ChatCompletionRequest.builder()
@@ -29,9 +26,11 @@ public class GptChatPoemRequest {
     }
 
     private static List<ChatMessage> convertChatMessage(GptChatPoemRequest request) {
-        String message = "%s 3글자와 %s 위치에 대한 시를 써줘.".formatted(
-                String.join(", ", request.getWords()),
-                request.location);
+        String message = MESSAGE
+                .formatted(
+                        String.join(WORDS_DELIMITER, request.getWords()), request.location,
+                        MIN_TEXT_LIMIT, MAX_TEXT_LIMIT
+                );
 
         return List.of(new ChatMessage(ROLE, message));
     }
