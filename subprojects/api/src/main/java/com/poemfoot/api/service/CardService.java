@@ -1,28 +1,21 @@
 package com.poemfoot.api.service;
 
 import com.poemfoot.api.domain.Card;
-import com.poemfoot.api.domain.W3wResult;
-import com.poemfoot.api.domain.Words;
 import com.poemfoot.api.domain.member.Member;
 import com.poemfoot.api.domain.poem.Poem;
 import com.poemfoot.api.dto.request.CardRequest;
 import com.poemfoot.api.dto.response.card.CardListResponse;
+import com.poemfoot.api.dto.response.card.CardPoemResponse;
 import com.poemfoot.api.dto.response.card.CardReadyResponse;
 import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.exception.notfound.card.NotFoundCardException;
 import com.poemfoot.api.exception.notfound.member.NotFoundMemberException;
 import com.poemfoot.api.repository.CardRepository;
 import com.poemfoot.api.repository.MemberRepository;
-import com.poemfoot.api.repository.PoemRepository;
-import com.poemfoot.api.repository.W3wResultRepository;
-import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 import com.poemfoot.gpt.service.GptPoemProvider;
 import com.poemfoot.w3w.W3wProvider;
-import com.poemfoot.w3w.dto.W3wWords;
-import com.poemfoot.w3w.dto.W3wWordsResponse;
 import java.util.List;
-import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -62,7 +55,8 @@ public class CardService {
         Member findMember = memberRepository.findFirstByDeviceId(deviceId)
                 .orElseThrow(NotFoundMemberException::new);
 
-        Card card = cardRepository.save(new Card(findMember, getPoem(request), request));
+        Poem poem = poemService.findPoem(request.words().words(), request.location());
+        Card card = cardRepository.save(new Card(findMember, poem, request));
         return CardResponse.of(card);
     }
 
@@ -72,22 +66,27 @@ public class CardService {
         return CardReadyResponse.from(isReadiness);
     }
 
+    @Transactional
+    public CardPoemResponse getPoem(String location, Double latitude, Double longitude) {
+        List<String> words = w3wService.requestWords(latitude, longitude);
+
+        GptChatPoemResponse poemResponse = poemService.requestPoem(words, location);
+        log.info("{}", poemResponse.isReuse());
+        if (!poemResponse.isReuse()) {
+            return CardPoemResponse.of(
+                    poemService.savePoem(words, location, poemResponse)
+            );
+        }
+        return CardPoemResponse.of(
+                poemService.findPoem(words, location)
+        );
+    }
+
     private List<CardResponse> getCards(Long memberId) {
         List<Card> cards = cardRepository.findByMemberId(memberId);
 
         return cards.stream()
                 .map(CardResponse::of)
                 .toList();
-    }
-
-    private Poem getPoem(CardRequest request) {
-        String location = request.location();
-        List<String> words = w3wService.requestWords(request.latitude(), request.longitude());
-
-        GptChatPoemResponse poemResponse = poemService.requestPoem(words, location);
-        if (!poemResponse.isReuse()) {
-            return poemService.savePoem(words, location, poemResponse);
-        }
-        return poemService.findPoem(words, location);
     }
 }
