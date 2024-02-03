@@ -3,12 +3,14 @@ package com.poemfoot.api.dto.response.card;
 import com.poemfoot.api.domain.W3wResult;
 import com.poemfoot.api.domain.Words;
 import com.poemfoot.api.domain.poem.Poem;
+import java.sql.Timestamp;
 import lombok.Builder;
 
 @Builder
 public record CardPoemResponse(
         Long poemId,
         Long w3wResultId,
+        Timestamp createdTime,
         String title,
         String content,
         Words words,
@@ -18,6 +20,7 @@ public record CardPoemResponse(
         return CardPoemResponse.builder()
                 .poemId(poem.getId())
                 .w3wResultId(w3wResult.getId())
+                .createdTime(poem.getCreatedTime())
                 .title(poem.getTitle())
                 .content(poem.getContent())
                 .words(poem.getWords())
