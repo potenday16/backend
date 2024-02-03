@@ -1,6 +1,8 @@
 package com.poemfoot.api.service;
 
 import com.poemfoot.api.domain.Card;
+import com.poemfoot.api.domain.W3wResult;
+import com.poemfoot.api.domain.Words;
 import com.poemfoot.api.domain.member.Member;
 import com.poemfoot.api.domain.poem.Poem;
 import com.poemfoot.api.dto.request.CardRequest;
@@ -12,6 +14,7 @@ import com.poemfoot.api.exception.notfound.member.NotFoundMemberException;
 import com.poemfoot.api.repository.CardRepository;
 import com.poemfoot.api.repository.MemberRepository;
 import com.poemfoot.api.repository.PoemRepository;
+import com.poemfoot.api.repository.W3wResultRepository;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 import com.poemfoot.gpt.service.GptPoemProvider;
@@ -36,6 +39,7 @@ public class CardService {
     private final W3wProvider w3wProvider;
     private final GptPoemProvider gptPoemProvider;
     private final PoemService poemService;
+    private final W3wService w3wService;
 
     public CardResponse findCard(Long cardId) {
         Card findCard = cardRepository.findById(cardId)
@@ -57,15 +61,14 @@ public class CardService {
 
         Member findMember = memberRepository.findFirstByDeviceId(deviceId)
                 .orElseThrow(NotFoundMemberException::new);
-        W3wWordsResponse w3wResponse = w3wProvider.getWords(request.latitude(), request.longitude(),
-                Locale.KOREA);
 
-        Card card = cardRepository.save(new Card(findMember, getPoem(request, w3wResponse), request));
+        Card card = cardRepository.save(new Card(findMember, getPoem(request), request));
         return CardResponse.of(card);
     }
 
-    public CardReadyResponse checkReadiness(){
-        boolean isReadiness = gptPoemProvider.validateGptRequest() && w3wProvider.validateW3WRequest();
+    public CardReadyResponse checkReadiness() {
+        boolean isReadiness =
+                gptPoemProvider.validateGptRequest() && w3wProvider.validateW3WRequest();
         return CardReadyResponse.from(isReadiness);
     }
 
@@ -77,10 +80,10 @@ public class CardService {
                 .toList();
     }
 
-    private Poem getPoem(CardRequest request, W3wWordsResponse w3wResponse) {
-        List<String> words = w3wResponse.words().toList();
+    private Poem getPoem(CardRequest request) {
         String location = request.location();
-        log.info("words: {}",words);
+        List<String> words = w3wService.requestWords(request.latitude(), request.longitude());
+
         GptChatPoemResponse poemResponse = poemService.requestPoem(words, location);
         if (!poemResponse.isReuse()) {
             return poemService.savePoem(words, location, poemResponse);
