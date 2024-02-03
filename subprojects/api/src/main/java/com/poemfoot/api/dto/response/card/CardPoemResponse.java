@@ -9,6 +9,7 @@ import lombok.Builder;
 public record CardPoemResponse(
         Long poemId,
         Long w3wResultId,
+
         String title,
         String content,
         Words words,

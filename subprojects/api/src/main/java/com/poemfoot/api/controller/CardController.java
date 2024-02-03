@@ -45,6 +45,14 @@ public class CardController {
         return ResponseEntity.ok(cardService.saveCard(deviceId, cardRequest));
     }
 
+    @PostMapping("/poem")
+    public ResponseEntity<CardPoemResponse> requestPoem(
+            @RequestBody CardPoemRequest request
+    ){
+        return ResponseEntity.ok(cardService.getPoem(request.location(),
+                request.latitude(), request.longitude()));
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "특정 카드 조회")
     public ResponseEntity<CardResponse> findCard(
