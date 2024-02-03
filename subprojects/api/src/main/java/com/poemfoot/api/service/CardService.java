@@ -71,7 +71,6 @@ public class CardService {
         List<String> words = w3wService.requestWords(latitude, longitude);
 
         GptChatPoemResponse poemResponse = poemService.requestPoem(words, location);
-        log.info("{}", poemResponse.isReuse());
         if (!poemResponse.isReuse()) {
             return CardPoemResponse.of(
                     poemService.savePoem(words, location, poemResponse)
