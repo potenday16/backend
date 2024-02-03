@@ -2,18 +2,13 @@ package com.poemfoot.api.service;
 
 import com.poemfoot.api.domain.W3wResult;
 import com.poemfoot.api.domain.Words;
-import com.poemfoot.api.domain.poem.Poem;
+import com.poemfoot.api.exception.notfound.w3wresult.NotFoundW3wResultException;
 import com.poemfoot.api.repository.W3wResultRepository;
-import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
-import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
-import com.poemfoot.gpt.exception.toomanyrequest.GptTooManyRequestException;
 import com.poemfoot.w3w.W3wProvider;
 import com.poemfoot.w3w.dto.W3wWordsResponse;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +32,15 @@ public class W3wService {
         W3wWordsResponse response = w3wProvider.getWords(latitude, longitude, Locale.KOREA);
         saveW3wResult(latitude, longitude, response);
         return response.words().toList();
+    }
+
+    public W3wResult findW3wResult(Double latitude, Double longitude) {
+        Optional<W3wResult> w3wResult = w3wResultRepository.findFirstByLatitudeAndLongitude(latitude, longitude);
+        return w3wResult.orElseThrow(NotFoundW3wResultException::new);
+    }
+    public W3wResult findW3wResult(Long w3wResultId) {
+        return w3wResultRepository.findById(w3wResultId)
+                .orElseThrow(NotFoundW3wResultException::new);
     }
 
     private void saveW3wResult(Double latitude, Double longitude, W3wWordsResponse response) {

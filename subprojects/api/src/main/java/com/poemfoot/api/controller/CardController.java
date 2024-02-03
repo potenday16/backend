@@ -37,20 +37,12 @@ public class CardController {
     }
 
     @PostMapping
-    @Operation(summary = "카드 생성")
+    @Operation(summary = "카드 생성 (생성 전, 시 생성 필요함)")
     public ResponseEntity<CardResponse> saveCard(
             @RequestHeader(DEVICE_ID) String deviceId,
             @RequestBody CardRequest cardRequest
     ) {
         return ResponseEntity.ok(cardService.saveCard(deviceId, cardRequest));
-    }
-
-    @PostMapping("/poem")
-    public ResponseEntity<CardPoemResponse> requestPoem(
-            @RequestBody CardPoemRequest request
-    ){
-        return ResponseEntity.ok(cardService.getPoem(request.location(),
-                request.latitude(), request.longitude()));
     }
 
     @GetMapping("/{id}")
@@ -59,6 +51,15 @@ public class CardController {
             @PathVariable("id") Long cardId
     ) {
         return ResponseEntity.ok(cardService.findCard(cardId));
+    }
+
+    @PostMapping("/poem")
+    @Operation(summary = "시 생성")
+    public ResponseEntity<CardPoemResponse> requestPoem(
+            @RequestBody CardPoemRequest request
+    ){
+        return ResponseEntity.ok(cardService.getPoem(request.location(),
+                request.latitude(), request.longitude()));
     }
 
     @GetMapping("/readiness")

@@ -59,7 +59,7 @@ public class Card extends BaseTime {
         this.longitude = longitude;
     }
 
-    public Card(Member member, Poem poem,
+    public Card(Member member, Poem poem, W3wResult w3wResult,
             CardRequest request) {
         this.member = member;
         this.poem = poem;
@@ -67,7 +67,7 @@ public class Card extends BaseTime {
         this.font = request.font();
         this.fontColor = request.fontColor();
         this.background = request.background();
-        this.latitude = request.latitude();
-        this.longitude = request.longitude();
+        this.latitude = w3wResult.getLatitude();
+        this.longitude = w3wResult.getLongitude();
     }
 }

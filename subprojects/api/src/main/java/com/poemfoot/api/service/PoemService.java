@@ -60,6 +60,11 @@ public class PoemService {
                 .orElseThrow(NotFoundPoemException::new);
     }
 
+    public Poem findPoem(Long poemId) {
+        return poemRepository.findById(poemId)
+                .orElseThrow(NotFoundPoemException::new);
+    }
+
     private Words getWords(GptChatPoemRequest request) {
         return Words.of(request.getWords());
     }
