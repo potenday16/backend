@@ -2,8 +2,10 @@ package com.poemfoot.api.controller;
 
 import static com.poemfoot.api.config.CommonConstants.DEVICE_ID;
 
+import com.poemfoot.api.dto.request.CardPoemRequest;
 import com.poemfoot.api.dto.request.CardRequest;
 import com.poemfoot.api.dto.response.card.CardListResponse;
+import com.poemfoot.api.dto.response.card.CardPoemResponse;
 import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,6 +43,14 @@ public class CardController {
             @RequestBody CardRequest cardRequest
     ) {
         return ResponseEntity.ok(cardService.saveCard(deviceId, cardRequest));
+    }
+
+    @PostMapping("/poem")
+    public ResponseEntity<CardPoemResponse> requestPoem(
+            @RequestBody CardPoemRequest request
+    ){
+        return ResponseEntity.ok(cardService.getPoem(request.location(),
+                request.latitude(), request.longitude()));
     }
 
     @GetMapping("/{id}")
