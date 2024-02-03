@@ -1,13 +1,9 @@
 package com.poemfoot.api.dto.request;
 
-import com.poemfoot.api.domain.Words;
-
 public record CardRequest(
-        String location,
-        Words words,
+        Long poemId,
+        Long w3wResultId,
         String font,
         String fontColor,
-        String background,
-        double latitude,
-        double longitude
+        String background
 ) { }

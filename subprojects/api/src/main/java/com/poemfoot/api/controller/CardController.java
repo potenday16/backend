@@ -45,6 +45,14 @@ public class CardController {
         return ResponseEntity.ok(cardService.saveCard(deviceId, cardRequest));
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "특정 카드 조회")
+    public ResponseEntity<CardResponse> findCard(
+            @PathVariable("id") Long cardId
+    ) {
+        return ResponseEntity.ok(cardService.findCard(cardId));
+    }
+
     @PostMapping("/poem")
     @Operation(summary = "시 생성")
     public ResponseEntity<CardPoemResponse> requestPoem(
@@ -52,14 +60,6 @@ public class CardController {
     ){
         return ResponseEntity.ok(cardService.getPoem(request.location(),
                 request.latitude(), request.longitude()));
-    }
-
-    @GetMapping("/{id}")
-    @Operation(summary = "특정 카드 조회")
-    public ResponseEntity<CardResponse> findCard(
-            @PathVariable("id") Long cardId
-    ) {
-        return ResponseEntity.ok(cardService.findCard(cardId));
     }
 
     @GetMapping("/readiness")

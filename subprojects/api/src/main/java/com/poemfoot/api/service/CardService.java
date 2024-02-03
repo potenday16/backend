@@ -1,6 +1,7 @@
 package com.poemfoot.api.service;
 
 import com.poemfoot.api.domain.Card;
+import com.poemfoot.api.domain.W3wResult;
 import com.poemfoot.api.domain.member.Member;
 import com.poemfoot.api.domain.poem.Poem;
 import com.poemfoot.api.dto.request.CardRequest;
@@ -55,8 +56,9 @@ public class CardService {
         Member findMember = memberRepository.findFirstByDeviceId(deviceId)
                 .orElseThrow(NotFoundMemberException::new);
 
-        Poem poem = poemService.findPoem(request.words().words(), request.location());
-        Card card = cardRepository.save(new Card(findMember, poem, request));
+        Poem poem = poemService.findPoem(request.poemId());
+        W3wResult w3wResult = w3wService.findW3wResult(request.w3wResultId());
+        Card card = cardRepository.save(new Card(findMember, poem, w3wResult, request));
         return CardResponse.of(card);
     }
 
@@ -73,11 +75,13 @@ public class CardService {
         GptChatPoemResponse poemResponse = poemService.requestPoem(words, location);
         if (!poemResponse.isReuse()) {
             return CardPoemResponse.of(
-                    poemService.savePoem(words, location, poemResponse)
+                    poemService.savePoem(words, location, poemResponse),
+                    w3wService.findW3wResult(latitude, longitude)
             );
         }
         return CardPoemResponse.of(
-                poemService.findPoem(words, location)
+                poemService.findPoem(words, location),
+                w3wService.findW3wResult(latitude, longitude)
         );
     }
 
