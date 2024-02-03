@@ -60,11 +60,11 @@ docker run -d --name poten16-server -p 8080:8080 -e MYSQL_URL=${MYSQL_URL} -e MY
 ```
 
 # CI/CD 세팅
-- [ ] Github Actions
-  - [ ] 빌드
+- [x] Github Actions
+  - [x] 빌드
     - gradle 명령어 실행 (build 및 테스트)
     - docker image build
-  - [ ] 배포
+  - [x] 배포
     - docker image push
     - ssh 접속 후, 서버 호스트에서 docker image pull & restart
 
@@ -112,9 +112,14 @@ docker login poten16.kr.ncr.ntruss.com
 
 - W3wResult
   - id
+  - country
+  - nearestPlace
+  - latitude
+  - longitude
+  - words
+  - language
   - locale
-  - coordinates ( 위도, 경도 ) // TODO: 3 by 3 구역내의 인덱싱 필요...
-  - result (3단어 해쉬 처리)
+  - map
 
 ---
 # API 설계
@@ -137,9 +142,9 @@ docker login poten16.kr.ncr.ntruss.com
     - coordinate (위도, 경도) --> w3w API 요청 파라미터로 사용
     - additionalWord (추가 단어) - 위치 관련 단어
     - backGroundImageId
+- [x] POST /api/v1/cards/poem : 특정 카드의 시 생성
 - ~~PUT /api/v1/cards/{id} : 카드 수정~~
 - ~~DELETE /api/v1/cards/{id} : 카드 삭제~~ (확인 필요)
-- [ ] GET /api/v1/cards/{id}/poem : 특정 카드의 시 조회
 ---
 # TODO
-- [ ] W3W 캐시 처리
+- [x] W3W 캐시 처리
