@@ -58,7 +58,7 @@ public class CardController {
     public ResponseEntity<CardPoemResponse> requestPoem(
             @RequestBody CardPoemRequest request
     ){
-        return ResponseEntity.ok(cardService.getPoem(request.location(),
+        return ResponseEntity.ok(cardService.getPoem(request.location(), request.address(),
                 request.latitude(), request.longitude()));
     }
 

@@ -69,19 +69,22 @@ public class CardService {
     }
 
     @Transactional
-    public CardPoemResponse getPoem(String location, Double latitude, Double longitude) {
+    public CardPoemResponse getPoem(String location, String address,
+            Double latitude, Double longitude) {
         List<String> words = w3wService.requestWords(latitude, longitude);
 
         GptChatPoemResponse poemResponse = poemService.requestPoem(words, location);
         if (!poemResponse.isReuse()) {
             return CardPoemResponse.of(
                     poemService.savePoem(words, location, poemResponse),
-                    w3wService.findW3wResult(latitude, longitude)
+                    w3wService.findW3wResult(latitude, longitude),
+                    address
             );
         }
         return CardPoemResponse.of(
                 poemService.findPoem(words, location),
-                w3wService.findW3wResult(latitude, longitude)
+                w3wService.findW3wResult(latitude, longitude),
+                address
         );
     }
 
