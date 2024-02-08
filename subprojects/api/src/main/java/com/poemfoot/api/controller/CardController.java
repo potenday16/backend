@@ -10,6 +10,7 @@ import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,7 +57,7 @@ public class CardController {
     @PostMapping("/poem")
     @Operation(summary = "시 생성")
     public ResponseEntity<CardPoemResponse> requestPoem(
-            @RequestBody CardPoemRequest request
+            @Valid @RequestBody CardPoemRequest request
     ){
         return ResponseEntity.ok(cardService.getPoem(request.location(), request.address(),
                 request.latitude(), request.longitude()));
