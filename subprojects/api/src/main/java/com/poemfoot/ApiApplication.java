@@ -1,11 +1,11 @@
-package com.poemfoot.api;
+package com.poemfoot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.poemfoot.api", "com.poemfoot.gpt", "com.poemfoot.w3w"})
 public class ApiApplication {
 
     public static void main(String[] args) {
