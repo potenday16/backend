@@ -50,4 +50,9 @@ public class GptChatPoemResponse {
         this.messages = List.of(message);
         this.reuse = true;
     }
+
+    public GptChatPoemResponse(String message, boolean reuse) {
+        this.messages = List.of(message);
+        this.reuse = reuse;
+    }
 }

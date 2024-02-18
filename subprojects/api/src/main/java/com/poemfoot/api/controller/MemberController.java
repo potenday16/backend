@@ -7,6 +7,7 @@ import com.poemfoot.api.dto.response.member.MemberCheckResponse;
 import com.poemfoot.api.dto.response.member.MemberResponse;
 import com.poemfoot.api.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class MemberController {
     @Operation(summary = "신규 사용자 저장 요청")
     @PostMapping
     public ResponseEntity<MemberResponse> saveMember(
+            @Parameter(description = "테스트 유저", example = "test")
             @RequestHeader(DEVICE_ID) String deviceId,
             @RequestBody MemberRequest memberRequest
     ) {
@@ -37,6 +39,7 @@ public class MemberController {
     @Operation(summary = "등록된 사용자인지 확인 요청")
     @GetMapping("/check")
     public ResponseEntity<MemberCheckResponse> findSavedMember(
+            @Parameter(description = "테스트 유저", example = "test")
             @RequestHeader(DEVICE_ID) String deviceId
     ) {
         return ResponseEntity.ok(memberService.findSavedMember(deviceId));

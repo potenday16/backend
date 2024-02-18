@@ -1,6 +1,7 @@
 package com.poemfoot.gpt.config;
 
-import com.poemfoot.gpt.service.GptPoemProvider;
+import com.poemfoot.gpt.GptProvider;
+import com.poemfoot.gpt.service.MockGptProviderImpl;
 import com.theokanning.openai.service.OpenAiService;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,8 +38,8 @@ public class GptConfig {
     }
 
     @Bean
-    public GptPoemProvider gptPoemProvider(OpenAiService openAiService) {
-        return new GptPoemProvider(openAiService);
+    public GptProvider gptPoemProvider(OpenAiService openAiService) {
+        return new MockGptProviderImpl(openAiService);
     }
 
     @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행

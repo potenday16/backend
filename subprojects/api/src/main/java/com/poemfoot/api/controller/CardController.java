@@ -9,6 +9,7 @@ import com.poemfoot.api.dto.response.card.CardPoemResponse;
 import com.poemfoot.api.dto.response.card.CardResponse;
 import com.poemfoot.api.service.CardService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class CardController {
     @GetMapping
     @Operation(summary = "특정 요청자의 카드 목록 조회")
     public ResponseEntity<CardListResponse> findCards(
+            @Parameter(description = "테스트 유저", example = "test")
             @RequestHeader(DEVICE_ID) String deviceId
     ) {
         return ResponseEntity.ok(cardService.findCards(deviceId));
@@ -40,6 +42,7 @@ public class CardController {
     @PostMapping
     @Operation(summary = "카드 생성 (생성 전, 시 생성 필요함)")
     public ResponseEntity<CardResponse> saveCard(
+            @Parameter(description = "테스트 유저", example = "test")
             @RequestHeader(DEVICE_ID) String deviceId,
             @RequestBody CardRequest cardRequest
     ) {

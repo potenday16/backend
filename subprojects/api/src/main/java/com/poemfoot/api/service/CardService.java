@@ -13,8 +13,8 @@ import com.poemfoot.api.exception.notfound.card.NotFoundCardException;
 import com.poemfoot.api.exception.notfound.member.NotFoundMemberException;
 import com.poemfoot.api.repository.CardRepository;
 import com.poemfoot.api.repository.MemberRepository;
+import com.poemfoot.gpt.GptProvider;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
-import com.poemfoot.gpt.service.GptPoemProvider;
 import com.poemfoot.w3w.W3wProvider;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class CardService {
     private final CardRepository cardRepository;
     private final MemberRepository memberRepository;
     private final W3wProvider w3wProvider;
-    private final GptPoemProvider gptPoemProvider;
+    private final GptProvider gptProvider;
     private final PoemService poemService;
     private final W3wService w3wService;
 
@@ -64,7 +64,7 @@ public class CardService {
 
     public CardReadyResponse checkReadiness() {
         boolean isReadiness =
-                gptPoemProvider.validateGptRequest() && w3wProvider.validateW3WRequest();
+                gptProvider.validateGptRequest() && w3wProvider.validateW3WRequest();
         return CardReadyResponse.from(isReadiness);
     }
 

@@ -7,10 +7,10 @@ import com.poemfoot.api.domain.Words;
 import com.poemfoot.api.domain.poem.PoemAnswer;
 import com.poemfoot.api.exception.notfound.poem.NotFoundPoemException;
 import com.poemfoot.api.repository.PoemRepository;
+import com.poemfoot.gpt.GptProvider;
 import com.poemfoot.gpt.dto.request.GptChatPoemRequest;
 import com.poemfoot.gpt.dto.response.chat.GptChatPoemResponse;
 import com.poemfoot.gpt.exception.toomanyrequest.GptTooManyRequestException;
-import com.poemfoot.gpt.service.GptPoemProvider;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,7 +27,7 @@ public class PoemService {
     private static final String TITLE_KEY = "제목";
     private static final String CONTENT_KEY = "내용";
 
-    private final GptPoemProvider gptPoemProvider;
+    private final GptProvider gptProvider;
     private final PoemRepository poemRepository;
 
     @Transactional
@@ -40,7 +40,7 @@ public class PoemService {
             return new GptChatPoemResponse(answer.getContent());
         }
 
-        return gptPoemProvider.completionChat(request)
+        return gptProvider.completionChat(request)
                 .orElseThrow(GptTooManyRequestException::new);
     }
 
