@@ -13,7 +13,6 @@ import com.what3words.javawrapper.response.ConvertTo3WA;
 import com.what3words.javawrapper.response.ConvertToCoordinates;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 public class W3wProviderImpl implements W3wProvider {

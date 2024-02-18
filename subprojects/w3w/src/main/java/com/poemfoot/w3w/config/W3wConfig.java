@@ -2,7 +2,6 @@ package com.poemfoot.w3w.config;
 
 import com.poemfoot.w3w.W3wProvider;
 import com.poemfoot.w3w.impl.MockW3wProviderImpl;
-import com.poemfoot.w3w.impl.W3wProviderImpl;
 import com.what3words.javawrapper.What3WordsV3;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.beans.factory.annotation.Value;
