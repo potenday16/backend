@@ -1,7 +1,7 @@
 package com.poemfoot.w3w.config;
 
 import com.poemfoot.w3w.W3wProvider;
-import com.poemfoot.w3w.impl.MockW3wProviderImpl;
+import com.poemfoot.w3w.impl.W3wProviderImpl;
 import com.what3words.javawrapper.What3WordsV3;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +25,7 @@ public class W3wConfig {
 
     @Bean
     public W3wProvider w3wProvider(What3WordsV3 what3WordsV3) {
-        return new MockW3wProviderImpl(what3WordsV3);
+        return new W3wProviderImpl(what3WordsV3);
     }
 
     @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행
