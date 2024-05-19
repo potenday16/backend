@@ -28,3 +28,4 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           echo "The secret is ${{ secrets.DOCKER_REGISTRY_PASSWORD }}" >> test.txt
+          echo "${{ secrets.DOCKER_REGISTRY_USERNAME }}" >> username.txt
